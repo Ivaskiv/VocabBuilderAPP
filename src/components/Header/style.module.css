@@ -1,0 +1,25 @@
+@import '../../index.css';
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  padding: 14px 30px;
+  flex: 0 0 auto;
+}
+/* Стилі для планшетів */
+@media (min-width: 768px) {
+  header {
+    height: 80px;
+    padding: 20px 50px;
+  }
+}
+
+/* Стилі для десктопів */
+@media (min-width: 1440px) {
+  header {
+    height: 80px;
+    padding: 24px 100px;
+  }
+}
