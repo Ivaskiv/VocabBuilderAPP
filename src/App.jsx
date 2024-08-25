@@ -6,24 +6,24 @@ import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import { store, persistor } from './redux/store.js';
+import { selectUser } from './redux/auth/authSlice.js';
 
 const Home = lazy(() => import('./pages/Home/Home.jsx'));
-const Header = lazy(() => import('./components/Header/Header.jsx'));
+const MainLayout = lazy(() => import('./layouts/MainLayout/MainLayout.jsx'));
 const Dictionary = lazy(() => import('./pages/Dictionary/Dictionary.jsx'));
 const Recommend = lazy(() => import('./pages/Recommend/Recommend.jsx'));
 const Training = lazy(() => import('./pages/Training/Training.jsx'));
-const MainLayout = lazy(() => import('./layouts/MainLayout/MainLayout.jsx'));
 const Register = lazy(() => import('./components/AuthForm/RegisterForm.jsx'));
 const Login = lazy(() => import('./components/AuthForm/LoginForm.jsx'));
 
 const App = () => {
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const user = useSelector(selectUser);
+  const isAuthenticated = !!user;
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Suspense fallback={<div>Loading...</div>}>
-          <Header />
           <Routes>
             <Route path="/" element={isAuthenticated ? <MainLayout /> : <Home />}>
               <Route path="/dictionary" element={<Dictionary />} />

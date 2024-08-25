@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const register = createAsyncThunk(
   'auth/register',
   async ({ name, email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/users/signup`, {
+      const response = await axios.post(`${apiUrl}/users/signup`, {
         name,
         email,
         password,
@@ -23,7 +23,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/users/signin`, {
+      const response = await axios.post(`${apiUrl}/users/signin`, {
         email,
         password,
       });
@@ -36,7 +36,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${API_URL}/users/signout`);
+    const response = await axios.post(`${apiUrl}/users/signout`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || 'Logout failed');

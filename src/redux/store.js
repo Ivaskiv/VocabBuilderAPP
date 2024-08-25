@@ -7,11 +7,11 @@ import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist
 const persistConfig = {
   key: 'root',
   storage,
-  // whitelist: ['adverts'],
+  whitelist: ['user'],
 };
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  auth: userReducer,
   // adverts: advertsReducer,
 });
 
@@ -25,7 +25,7 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  devTools: process.env.NODE_ENV === 'development',
+  devTools: import.meta.env.MODE === 'development',
 });
 
 const persistor = persistStore(store);
