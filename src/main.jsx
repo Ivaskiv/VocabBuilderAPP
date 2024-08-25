@@ -1,4 +1,4 @@
-// import 'modern-normalize/modern-normalize.css';
+import 'modern-normalize/modern-normalize.css';
 import './index.css';
 
 import React from 'react';

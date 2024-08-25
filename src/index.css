@@ -1,6 +1,6 @@
 /* index.css */
 
-/* @import 'modern-normalize/modern-normalize.css'; */
+@import 'modern-normalize/modern-normalize.css';
 
 :root {
   --color-white: #fff;
