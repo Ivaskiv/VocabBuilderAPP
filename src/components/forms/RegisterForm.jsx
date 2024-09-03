@@ -3,20 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import styles from '../../assets/styles/forms.module.css';
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
-  email: Yup.string().email('Invalid email').required('Email is required'),
-  password: Yup.string()
-    .matches(
-      /^(?=.*[a-zA-Z]{6})(?=.*\d)[a-zA-Z\d]{7}$/,
-      'Password must be at least 7 characters long, including 1 letter and 1 number'
-    )
-    .required('Password is required'),
-});
+import authSchema from '../../infrastructure/utils/authSchema';
 
 const RegisterForm = ({ onSubmit }) => {
   const {
@@ -24,7 +13,7 @@ const RegisterForm = ({ onSubmit }) => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(authSchema),
     mode: 'onChange',
   });
 

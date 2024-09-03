@@ -92,6 +92,7 @@ form {
 }
 
 .field input {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -104,7 +105,11 @@ form {
   border: 1px solid rgba(18, 20, 23, 0.1);
   border-radius: 15px;
 }
-
+.validation_error {
+  position: absolute;
+  font-size: 10px;
+  color: red;
+}
 @media (min-width: 768px) {
   h2 {
     font-size: 40px;
