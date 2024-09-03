@@ -13,4 +13,9 @@ export default defineConfig({
       '@pages': '/src/pages',
     },
   },
+  server: {
+    hmr: {
+      overlay: false,
+    },
+  },
 });

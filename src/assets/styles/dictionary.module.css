@@ -1,0 +1,15 @@
+@import '../../index.css';
+
+.dictionary_page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search {
+  position: relative;
+  padding: 24px;
+}
+.icon_search {
+  position: absolute;
+  right: 0;
+}

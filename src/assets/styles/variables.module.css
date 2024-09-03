@@ -1,0 +1,25 @@
+@import '../../index.css';
+
+:root {
+  --color-white: #ffffff;
+  --color-text-title: #121417;
+  --color-text-subtitle: rgba(18, 20, 23, 0.8);
+  --color-white-text: #fcfcfc;
+  --color-gray-light: #f8f8f8;
+  --color-green-cyan: #85aa9f;
+  --color-green-cyan-light: #a5c0b8;
+  --color-primary-dark: #121417;
+  --color-red: #d80027;
+  --color-green: #3cbf61;
+  --color-gray-border: #85aa9f;
+
+  /* fonts */
+  --font-primary: 'MacPaw Fixel Display', sans-serif;
+  --font-secondary: 'SF Pro Display', sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-light: 300;
+}

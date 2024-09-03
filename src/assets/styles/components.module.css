@@ -1,0 +1,10 @@
+@import '../../index.css';
+
+.button {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}

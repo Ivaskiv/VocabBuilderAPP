@@ -1,52 +1,79 @@
-//App.jsx
 import 'react-toastify/dist/ReactToastify.css';
+import styles from './assets/styles/App.module.css';
 import { Route, Routes } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
-import { Provider, useSelector } from 'react-redux';
+import { Suspense, lazy, useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
-import { store, persistor } from './redux/store.js';
-import { selectUser } from './redux/auth/authSlice.js';
+import { store, persistor } from './infrastructure/store/store.js';
+import RestrictedRoute from './features/routes/RestrictedRoute.jsx';
+import PrivateRoute from './features/routes/PrivateRoute.jsx';
+import { getCurrentUser } from './features/auth/authOperations.js';
 
-const Home = lazy(() => import('./pages/Home/Home.jsx'));
-const MainLayout = lazy(() => import('./layouts/MainLayout/MainLayout.jsx'));
-const Dictionary = lazy(() => import('./pages/Dictionary/Dictionary.jsx'));
-const Recommend = lazy(() => import('./pages/Recommend/Recommend.jsx'));
-const Training = lazy(() => import('./pages/Training/Training.jsx'));
-const Register = lazy(() => import('./components/AuthForm/RegisterForm.jsx'));
-const Login = lazy(() => import('./components/AuthForm/LoginForm.jsx'));
+const Home = lazy(() => import('./pages/Home.jsx'));
+const MainLayout = lazy(() => import('./components/layouts/MainLayout.jsx'));
+const Dictionary = lazy(() => import('./pages/Dictionary.jsx'));
+const Recommend = lazy(() => import('./pages/Recommend.jsx'));
+const Training = lazy(() => import('./pages/Training.jsx'));
+const Register = lazy(() => import('./components/forms/RegisterForm.jsx'));
+const Login = lazy(() => import('./components/forms/LoginForm.jsx'));
 
 const App = () => {
-  const user = useSelector(selectUser);
-  const isAuthenticated = !!user;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(getCurrentUser(token));
+    }
+  }, [dispatch]);
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="/" element={isAuthenticated ? <MainLayout /> : <Home />}>
-              <Route path="/dictionary" element={<Dictionary />} />
-              <Route path="/recommend" element={<Recommend />} />
-              <Route path="/training" element={<Training />} />
+          <div className={styles.app_container}>
+            <Routes>
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<RestrictedRoute component={<Home />} redirectTo="/" />} />
+                <Route
+                  path="/dictionary"
+                  element={<PrivateRoute component={<Dictionary />} redirectTo="/dictionary" />}
+                />
+                <Route
+                  path="/recommend"
+                  element={<PrivateRoute component={<Recommend />} redirectTo="/recommend" />}
+                />
+                <Route
+                  path="/training"
+                  element={<PrivateRoute component={<Training />} redirectTo="/training" />}
+                />
+              </Route>
 
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-            </Route>
-          </Routes>
-          <ToastContainer
-            position="top-center"
-            autoClose={1000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition="Flip"
-          />
+              {/* Public authentication pages */}
+              <Route
+                path="/register"
+                element={<RestrictedRoute component={<Register />} redirectTo="/" />}
+              />
+              <Route
+                path="/login"
+                element={<RestrictedRoute component={<Login />} redirectTo="/" />}
+              />
+            </Routes>
+            <ToastContainer
+              position="top-center"
+              autoClose={1000}
+              hideProgressBar
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              transition="Flip"
+            />
+          </div>
         </Suspense>
       </PersistGate>
     </Provider>
@@ -54,39 +81,3 @@ const App = () => {
 };
 
 export default App;
-
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vitejs.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.jsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App

@@ -1,0 +1,29 @@
+@import '../../index.css';
+
+body {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-regular);
+  /* color */
+  background-color: var(--color-gray-light);
+  color: var(--color-primary-dark);
+}
+
+h2 {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.light-text {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-light);
+}
+
+.medium-text {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.semi-bold-text {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-semi-bold);
+}

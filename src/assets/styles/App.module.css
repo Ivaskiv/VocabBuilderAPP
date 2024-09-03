@@ -1,0 +1,14 @@
+@import '../../index.css';
+
+.app_container {
+}
+
+@media (min-width: 768px) {
+  .app_container {
+  }
+}
+
+@media (min-width: 1440px) {
+  .app_container {
+  }
+}
