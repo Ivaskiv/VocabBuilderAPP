@@ -7,7 +7,6 @@ import {
 import styles from './styles.module.css';
 import ProgressBar from '../../layouts/progressBar/ProgressBar';
 import ActionsBtn from '../../layouts/ActionsBtn';
-import { useMemo } from 'react';
 import defaultData from '../../../infrastructure/utils/data';
 
 //! columnHelper використовується для створення колонок таблиці, а
@@ -15,36 +14,33 @@ import defaultData from '../../../infrastructure/utils/data';
 
 const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
   const columnHelper = createColumnHelper();
-  const columns = useMemo(
-    () => [
-      columnHelper.accessor('en', {
-        header: () => 'Word',
-        cell: info => info.getValue(),
-      }),
-      columnHelper.accessor('ua', {
-        header: () => 'Translation',
-        cell: info => info.getValue(),
-      }),
-      columnHelper.accessor('category', {
-        header: () => 'Category',
-        cell: info => info.getValue(),
-      }),
-      columnHelper.accessor('progress', {
-        header: () => 'Progress',
-        cell: info => (
-          <div className={styles.progress_container}>
-            {`${info.getValue()}%`}
-            <ProgressBar progress={info.getValue()} />
-          </div>
-        ),
-      }),
-      columnHelper.display({
-        header: () => '',
-        cell: ({ row }) => <ActionsBtn row={row} onEdit={onEdit} onDelete={onDelete} />,
-      }),
-    ],
-    [onEdit, onDelete]
-  );
+  const columns = [
+    columnHelper.accessor('en', {
+      header: () => 'Word',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('ua', {
+      header: () => 'Translation',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('category', {
+      header: () => 'Category',
+      cell: info => info.getValue(),
+    }),
+    columnHelper.accessor('progress', {
+      header: () => 'Progress',
+      cell: info => (
+        <div className={styles.progress_container}>
+          {`${info.getValue()}%`}
+          <ProgressBar progress={info.getValue()} />
+        </div>
+      ),
+    }),
+    columnHelper.display({
+      header: () => '',
+      cell: ({ row }) => <ActionsBtn row={row} onEdit={onEdit} onDelete={onDelete} />,
+    }),
+  ];
 
   const table = useReactTable({
     data,
