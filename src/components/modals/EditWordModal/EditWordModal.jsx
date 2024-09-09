@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { fetchCategories } from '../../../features/dictionary/categories/categoriesOperations';
 import Modal from '../modal/Modal';
 import AddWordForm from '../../forms/wordForm/AddWordForm';
-const AddWordModal = ({ isOpen, onClose }) => {
+const EditWordModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch(); //для оновлення стану Redux
 
   const categories = useSelector(selectCategories);
@@ -44,4 +44,4 @@ const AddWordModal = ({ isOpen, onClose }) => {
     </Modal>
   );
 };
-export default AddWordModal;
+export default EditWordModal;

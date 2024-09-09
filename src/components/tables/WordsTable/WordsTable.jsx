@@ -38,10 +38,9 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
           </div>
         ),
       }),
-      columnHelper.accessor('editDelete', {
+      columnHelper.display({
         header: () => '',
         cell: ({ row }) => <ActionsBtn row={row} onEdit={onEdit} onDelete={onDelete} />,
-        // cell: info => info.getValue(),
       }),
     ],
     [onEdit, onDelete]
