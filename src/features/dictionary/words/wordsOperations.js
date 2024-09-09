@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import dictionaryAPI from '../dictionary/dictionaryOperations.js';
+import dictionaryAPI from '../categories/categoriesOperations.js';
 
 export const fetchWords = createAsyncThunk('words/fetchWords', async (_, { rejectWithValue }) => {
   try {

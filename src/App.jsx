@@ -1,4 +1,5 @@
 import 'react-toastify/dist/ReactToastify.css';
+import './infrastructure/api/init.js';
 import styles from './assets/styles/App.module.css';
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
@@ -7,12 +8,12 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import { store, persistor } from './infrastructure/store/store.js';
 import RestrictedRoute from './features/routes/RestrictedRoute.jsx';
-import PrivateRoute from './features/routes/PrivateRoute.jsx';
+// import PrivateRoute from './features/routes/PrivateRoute.jsx';
 import { getCurrentUser } from './features/auth/authOperations.js';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const MainLayout = lazy(() => import('./components/layouts/MainLayout.jsx'));
-const Dictionary = lazy(() => import('./pages/Dictionary.jsx'));
+const Dictionary = lazy(() => import('./pages/dictionary/Dictionary.jsx'));
 const Recommend = lazy(() => import('./pages/Recommend.jsx'));
 const Training = lazy(() => import('./pages/Training.jsx'));
 const Register = lazy(() => import('./components/forms/RegisterForm.jsx'));
@@ -36,10 +37,11 @@ const App = () => {
             <Routes>
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<RestrictedRoute component={<Home />} redirectTo="/" />} />
-                <Route
+                {/* <Route
                   path="/dictionary"
                   element={<PrivateRoute component={<Dictionary />} redirectTo="/dictionary" />}
-                />
+                /> */}
+                {/* 
                 <Route
                   path="/recommend"
                   element={<PrivateRoute component={<Recommend />} redirectTo="/recommend" />}
@@ -47,6 +49,20 @@ const App = () => {
                 <Route
                   path="/training"
                   element={<PrivateRoute component={<Training />} redirectTo="/training" />}
+                />
+              </Route> */}
+                <Route
+                  path="/dictionary"
+                  element={<RestrictedRoute component={<Dictionary />} redirectTo="/dictionary" />}
+                />
+
+                <Route
+                  path="/recommend"
+                  element={<RestrictedRoute component={<Recommend />} redirectTo="/recommend" />}
+                />
+                <Route
+                  path="/training"
+                  element={<RestrictedRoute component={<Training />} redirectTo="/training" />}
                 />
               </Route>
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCategories } from './dictionaryOperations';
+import { fetchCategories } from './categoriesOperations';
 
 const categoriesSlice = createSlice({
   name: 'categories',
@@ -8,7 +8,7 @@ const categoriesSlice = createSlice({
     status: 'idle',
     error: null,
   },
-  redusers: {},
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(fetchCategories.pending, state => {

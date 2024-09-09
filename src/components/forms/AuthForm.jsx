@@ -51,7 +51,6 @@ const AuthForm = ({
   };
 
   useEffect(() => {
-    // Check if any field is filled to set the state for button rendering
     const isFilled = Object.values(errors).some(field => field);
     setIsFormFilled(isDirty || isFilled);
   }, [errors, isDirty]);

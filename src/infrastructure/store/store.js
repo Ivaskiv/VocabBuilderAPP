@@ -1,11 +1,13 @@
+//store.js
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
 import userReducer from '../../features/auth/authSlice';
-import categoriesReducer from '../../features/dictionary/categoriesSlice';
-import wordsReducer from '../../features/words/wordsSlice';
+import categoriesReducer from '../../features/dictionary/categories/categoriesSlice';
+import wordsReducer from '../../features/dictionary/words/wordsSlice';
+
 const rootReducer = combineReducers({
   auth: userReducer,
   categories: categoriesReducer,

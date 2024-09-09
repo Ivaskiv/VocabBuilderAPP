@@ -1,5 +1,5 @@
-import WordsTable from '../components/tables/WordsTable/WordsTable';
 import styles from '../assets/styles/dictionary.module.css';
+import WordsTable from '../components/tables/WordsTable/WordsTable';
 
 const Recommend = () => {
   return (
