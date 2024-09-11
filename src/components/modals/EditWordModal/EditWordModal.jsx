@@ -1,12 +1,13 @@
 import EditWordForm from '../../forms/wordForm/EditWordForm';
-import ModalProvider, { useModal } from '../ModalProvider';
+import DynamicFormModal from '../DynamicFormModal';
+import { useModal } from '../ModalProvider';
 
 export default function EditWordModal({ initialValues, onSuccess }) {
   const [isOpen, closeModal] = useModal();
 
   return (
     isOpen && (
-      <ModalProvider
+      <DynamicFormModal
         footer={
           <>
             <button type="submit" form="word-form">
@@ -24,7 +25,7 @@ export default function EditWordModal({ initialValues, onSuccess }) {
           onSubmitSuccess={onSuccess}
           onClose={closeModal}
         />
-      </ModalProvider>
+      </DynamicFormModal>
     )
   );
 }
