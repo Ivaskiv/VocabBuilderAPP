@@ -4,7 +4,7 @@ const selectCategoriesState = state => state.categories;
 
 export const selectCategories = createSelector(
   [selectCategoriesState],
-  categoriesState => categoriesState.items
+  categoriesState => categoriesState.categories
 );
 
 export const selectCategoriesStatus = createSelector(

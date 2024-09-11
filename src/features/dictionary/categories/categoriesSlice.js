@@ -4,7 +4,7 @@ import { fetchCategories } from './categoriesOperations';
 const categoriesSlice = createSlice({
   name: 'categories',
   initialState: {
-    items: [],
+    categories: [],
     status: 'idle',
     error: null,
   },
@@ -16,11 +16,11 @@ const categoriesSlice = createSlice({
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.items = action.payload;
+        state.categories = action.payload;
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload;
+        state.error = action.error.message;
       });
   },
 });

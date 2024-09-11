@@ -1,69 +1,83 @@
-// import { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { setSelectedCategory, setKeyword } from './filtersSlice';
-// import { fetchCategories } from './categoriesOperations';
-const Filters = () => {
-  return <h3>Filters</h3>;
+import { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { debounce } from 'lodash';
+import fetchCategories from '../../../features/dictionary/categories/categoriesOperations';
+import { createSelector } from 'reselect';
 
-  // const Filters = () => {
-  //   const dispatch = useDispatch();
-  //   const categories = useSelector(state => state.filters.categories);
-  //   const selectedCategory = useSelector(state => state.filters.selectedCategory);
-  //   const keyword = useSelector(state => state.filters.keyword);
+const selectFilters = state => state.filters || { categories: [] };
+const selectCategories = createSelector([selectFilters], filters => filters.categories);
 
-  //   const [search, setSearch] = useState(keyword);
+export default function Filters({ onFilterChange }) {
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategories);
 
-  //   useEffect(() => {
-  //     dispatch(fetchCategories());
-  //   }, [dispatch]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  //=============
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+  //=============
+  useEffect(() => {
+    const handler = debounce(() => {
+      const sanitizedValue = searchTerm.trim();
+      setDebouncedSearchTerm(sanitizedValue);
+      onFilterChange({ searchTerm: sanitizedValue, selectedCategory });
+    }, 300);
 
-  //   const handleSearchChange = e => {
-  //     const value = e.target.value.trim();
-  //     setSearch(value);
-  //   };
+    handler();
 
-  //   useEffect(() => {
-  //     const handler = setTimeout(() => {
-  //       dispatch(setKeyword(search));
-  //     }, 300);
+    return () => {
+      handler.cancel();
+    };
+  }, [searchTerm, selectedCategory, onFilterChange]);
+  //=============
+  const handleSearchChange = e => {
+    setSearchTerm(e.target.value);
+  };
+  //=============
+  const handleCategoryChange = e => {
+    const category = e.target.value;
+    setSelectedCategory(category);
+    onFilterChange({ searchTerm: debouncedSearchTerm, selectedCategory: category });
+  };
 
-  //     return () => {
-  //       clearTimeout(handler);
-  //     };
-  //   }, [search, dispatch]);
+  const filteredCategories = useMemo(() => {
+    return categories.map(category => (
+      <option key={category.id} value={category.name} placeholder="Categories">
+        {category.name}
+      </option>
+    ));
+  }, [categories]);
 
-  //   return (
-  //     <div>
-  //       <div>
-  //         <input type="text" value={search} onChange={handleSearchChange} placeholder="Search..." />
-  //       </div>
-  //       <div>
-  //         <select
-  //           value={selectedCategory}
-  //           onChange={e => dispatch(setSelectedCategory(e.target.value))}
-  //         >
-  //           <option value="">All Categories</option>
-  //           {categories.map(category => (
-  //             <option key={category.id} value={category.name}>
-  //               {category.name}
-  //             </option>
-  //           ))}
-  //         </select>
-  //       </div>
-  //       {selectedCategory === 'verb' && (
-  //         <div>
-  //           <label>
-  //             <input type="radio" name="verbType" value="action" onChange={() => {}} />
-  //             Action
-  //           </label>
-  //           <label>
-  //             <input type="radio" name="verbType" value="state" onChange={() => {}} />
-  //             State
-  //           </label>
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-};
-
-export default Filters;
+  return (
+    <div>
+      <div>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search..."
+        />
+      </div>
+      <div>
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          {filteredCategories}
+        </select>
+      </div>
+      {selectedCategory === 'Verb' && (
+        <div>
+          <label>
+            <input type="radio" name="verbType" value="action" onChange={() => {}} />
+            Action
+          </label>
+          <label>
+            <input type="radio" name="verbType" value="state" onChange={() => {}} />
+            State
+          </label>
+        </div>
+      )}
+    </div>
+  );
+}

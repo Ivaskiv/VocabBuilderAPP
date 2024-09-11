@@ -10,6 +10,7 @@ import { store, persistor } from './infrastructure/store/store.js';
 import RestrictedRoute from './features/routes/RestrictedRoute.jsx';
 // import PrivateRoute from './features/routes/PrivateRoute.jsx';
 import { getCurrentUser } from './features/auth/authOperations.js';
+import ModalProvider from './components/modals/ModalProvider.jsx';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const MainLayout = lazy(() => import('./components/layouts/MainLayout.jsx'));
@@ -32,16 +33,17 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className={styles.app_container}>
-            <Routes>
-              <Route path="/" element={<MainLayout />}>
-                <Route index element={<RestrictedRoute component={<Home />} redirectTo="/" />} />
-                {/* <Route
+        <ModalProvider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <div className={styles.app_container}>
+              <Routes>
+                <Route path="/" element={<MainLayout />}>
+                  <Route index element={<RestrictedRoute component={<Home />} redirectTo="/" />} />
+                  {/* <Route
                   path="/dictionary"
                   element={<PrivateRoute component={<Dictionary />} redirectTo="/dictionary" />}
                 /> */}
-                {/* 
+                  {/* 
                 <Route
                   path="/recommend"
                   element={<PrivateRoute component={<Recommend />} redirectTo="/recommend" />}
@@ -51,46 +53,49 @@ const App = () => {
                   element={<PrivateRoute component={<Training />} redirectTo="/training" />}
                 />
               </Route> */}
-                <Route
-                  path="/dictionary"
-                  element={<RestrictedRoute component={<Dictionary />} redirectTo="/dictionary" />}
-                />
+                  <Route
+                    path="/dictionary"
+                    element={
+                      <RestrictedRoute component={<Dictionary />} redirectTo="/dictionary" />
+                    }
+                  />
 
-                <Route
-                  path="/recommend"
-                  element={<RestrictedRoute component={<Recommend />} redirectTo="/recommend" />}
-                />
-                <Route
-                  path="/training"
-                  element={<RestrictedRoute component={<Training />} redirectTo="/training" />}
-                />
-              </Route>
+                  <Route
+                    path="/recommend"
+                    element={<RestrictedRoute component={<Recommend />} redirectTo="/recommend" />}
+                  />
+                  <Route
+                    path="/training"
+                    element={<RestrictedRoute component={<Training />} redirectTo="/training" />}
+                  />
+                </Route>
 
-              {/* Public authentication pages */}
-              <Route
-                path="/register"
-                element={<RestrictedRoute component={<Register />} redirectTo="/" />}
+                {/* Public authentication pages */}
+                <Route
+                  path="/register"
+                  element={<RestrictedRoute component={<Register />} redirectTo="/" />}
+                />
+                <Route
+                  path="/login"
+                  element={<RestrictedRoute component={<Login />} redirectTo="/" />}
+                />
+              </Routes>
+              <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition="Flip"
               />
-              <Route
-                path="/login"
-                element={<RestrictedRoute component={<Login />} redirectTo="/" />}
-              />
-            </Routes>
-            <ToastContainer
-              position="top-center"
-              autoClose={1000}
-              hideProgressBar
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-              transition="Flip"
-            />
-          </div>
-        </Suspense>
+            </div>
+          </Suspense>
+        </ModalProvider>
       </PersistGate>
     </Provider>
   );
