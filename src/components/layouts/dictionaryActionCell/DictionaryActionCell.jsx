@@ -1,34 +1,32 @@
-import styles from './styles.module.css';
-import { useCallback, useState } from 'react';
+import { useState, useCallback } from 'react';
 import { IoIosMore } from 'react-icons/io';
 import { FiEdit2 } from 'react-icons/fi';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import EditWordForm from '../../forms/wordForm/EditWordForm';
 import axios from 'axios';
 import {
-  autoUpdate,
-  flip,
   FloatingFocusManager,
+  FloatingPortal,
+  useFloating,
   offset,
+  flip,
   shift,
   useClick,
   useDismiss,
   useInteractions,
   useRole,
-  useFloating,
 } from '@floating-ui/react';
+import styles from './styles.module.css';
 
 export default function DictionaryActionCell({ row, onDeleteSuccess }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
-  // @floating-ui/react
-  const [isOpen, setIsOpen] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
   const { refs, floatingStyles, context } = useFloating({
-    open: isOpen,
-    onOpenChange: setIsOpen,
-    middleware: [offset(4), flip({ fallbackAxisSideDirection: 'end' }), shift()],
-    whileElementsMounted: autoUpdate,
+    open: isPopoverOpen,
+    onOpenChange: setIsPopoverOpen,
+    middleware: [offset(4), flip(), shift()],
   });
-  console.log('Floating context:', context);
 
   const click = useClick(context);
   const dismiss = useDismiss(context);
@@ -37,7 +35,7 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
 
   const handleEdit = () => {
     setIsEditOpen(true);
-    setIsOpen(false);
+    setIsPopoverOpen(false);
   };
 
   const handleDelete = useCallback(async () => {
@@ -45,9 +43,9 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
       const wordId = row.original.id;
       await axios.delete(`/words/${wordId}`);
       onDeleteSuccess(wordId);
-      setIsOpen(false);
+      setIsPopoverOpen(false);
     } catch (error) {
-      console.error('Error deleting word: ', error);
+      console.error('Error deleting word:', error);
     }
   }, [onDeleteSuccess, row.original.id]);
 
@@ -56,16 +54,16 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
       <button ref={refs.setReference} {...getReferenceProps()}>
         <IoIosMore />
       </button>
-      {isOpen && (
-        <FloatingFocusManager context={context} modal={false}>
-          <div
-            className={styles.dictionary_popover}
-            ref={refs.setFloating}
-            style={floatingStyles}
-            aria-labelledby="menuId"
-            {...getFloatingProps}
-          >
-            <div id="menuId">
+
+      <FloatingPortal>
+        {isPopoverOpen && (
+          <FloatingFocusManager context={context} modal={false}>
+            <div
+              ref={refs.setFloating}
+              style={floatingStyles}
+              className={styles.dictionary_popover}
+              {...getFloatingProps()}
+            >
               <button onClick={handleEdit}>
                 <FiEdit2 />
                 Edit
@@ -75,10 +73,12 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
                 Delete
               </button>
             </div>
-          </div>
-        </FloatingFocusManager>
-      )}
-      {isEditOpen && <EditWordForm word={row.original} onClose={() => setIsEditOpen(false)} />}
+          </FloatingFocusManager>
+        )}
+      </FloatingPortal>
+      <FloatingPortal>
+        {isEditOpen && <EditWordForm word={row.original} onClose={() => setIsEditOpen(false)} />}
+      </FloatingPortal>
     </>
   );
 }
