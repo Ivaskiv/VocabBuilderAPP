@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import App from './App.jsx';
 import { HelmetProvider } from 'react-helmet-async';
 import { persistor, store } from './infrastructure/store/store.js';
+import { ModalProvider } from './components/modals/ModalProvider.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <HelmetProvider>
-            <App />
+            <ModalProvider>
+              <App />
+            </ModalProvider>
           </HelmetProvider>
         </BrowserRouter>
       </PersistGate>

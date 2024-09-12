@@ -1,7 +1,6 @@
-// import styles from './styles.module.css';
 import Joi from 'joi';
-import WordForm from './WordForm';
 import { useState } from 'react';
+import WordForm from './WordForm';
 
 const schema = Joi.object({
   en: Joi.string()
@@ -18,8 +17,8 @@ const schema = Joi.object({
     }),
 });
 
-export default function EditWordForm({ initialValues, onSubmit, onCancel }) {
-  const [values, setValues] = useState(initialValues || { en: '', ua: '' });
+export default function EditWordForm({ word = { en: '', ua: '' }, onSubmitSuccess, onCancel }) {
+  const [values, setValues] = useState(word);
   const [errors, setErrors] = useState({});
 
   const handleChange = e => {
@@ -43,17 +42,13 @@ export default function EditWordForm({ initialValues, onSubmit, onCancel }) {
   const handleSubmit = e => {
     e.preventDefault();
     if (!validate()) return;
-    onSubmit(values);
+    onSubmitSuccess(values);
   };
 
   return (
-    <WordForm
-      initialValues={{ en: '', ua: '', category: '', verbType: '' }}
-      handleSubmitSuccess={handleSubmit}
-      handleChange={handleChange}
-      onClose={onCancel}
-      mode="add"
-    />
+    <form onSubmit={handleSubmit}>
+      <WordForm values={values} errors={errors} handleChange={handleChange} onCancel={onCancel} />
+      <button type="submit">Save</button>
+    </form>
   );
 }
-EditWordForm;
