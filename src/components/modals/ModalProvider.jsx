@@ -1,26 +1,27 @@
 // ModalProvider.jsx
-import { createContext, useState, useContext } from 'react';
-import ModalOverlay from './ModalOverlay';
+import { createContext, useState } from 'react';
+import Modal from '../modals/Modal.jsx';
 
-const ModalContext = createContext();
+export const ModalContext = createContext();
 
-export const ModalProvider = ({ children }) => {
-  const [modal, setModal] = useState(null);
+export default function ModalProvider({ children }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
-  const openModal = modalContent => {
-    setModal(modalContent);
+  const openModal = content => {
+    setModalContent(content);
+    setIsOpen(true);
   };
 
   const closeModal = () => {
-    setModal(null);
+    setIsOpen(false);
+    setModalContent(null);
   };
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
+    <ModalContext.Provider value={{ isOpen, modalContent, openModal, closeModal }}>
       {children}
-      {modal && <ModalOverlay onClose={closeModal}>{modal}</ModalOverlay>}
+      <Modal />
     </ModalContext.Provider>
   );
-};
-
-export const useModal = () => useContext(ModalContext);
+}

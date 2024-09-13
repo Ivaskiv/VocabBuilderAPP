@@ -57,7 +57,6 @@ export default function WordForm({ initialValues, onSubmitSuccess, onClose, mode
       {errors.en && <span>{errors.en.message}</span>}
       <input {...register('ua')} placeholder="Ukrainian word" />
       {errors.ua && <span>{errors.ua.message}</span>}
-      <button type="submit">{mode === 'add' ? 'Add' : 'Save'}</button>
     </form>
   );
 }

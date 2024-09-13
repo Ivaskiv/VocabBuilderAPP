@@ -14,3 +14,16 @@
   position: absolute;
   right: 0;
 }
+/* dialog  */
+.dialog_overlay {
+  background: rgba(0, 0, 0, 0.8);
+  display: grid;
+  place-items: center;
+}
+
+.dialog {
+  margin: 15px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 4px;
+}

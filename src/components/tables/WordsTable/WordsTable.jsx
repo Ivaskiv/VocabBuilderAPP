@@ -8,6 +8,8 @@ import styles from './styles.module.css';
 import ProgressBar from '../../layouts/progressBar/ProgressBar';
 import defaultData from '../../../infrastructure/utils/data';
 import DictionaryActionCell from '../../layouts/dictionaryActionCell/DictionaryActionCell';
+import ModalProvider from '../../modals/ModalProvider';
+// import ModalProvider from '../../modals/ModalProvider';
 
 const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
   const columnHelper = createColumnHelper();
@@ -33,7 +35,9 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
       cell: info => (
         <div className={styles.progress_container}>
           {`${info.getValue()}%`}
-          <ProgressBar progress={info.getValue()} />
+          <ModalProvider>
+            <ProgressBar progress={info.getValue()} />
+          </ModalProvider>
         </div>
       ),
     }),

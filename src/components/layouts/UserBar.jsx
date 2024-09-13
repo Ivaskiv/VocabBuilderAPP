@@ -12,7 +12,6 @@ const UserBar = ({ user }) => {
   const handleLogout = async () => {
     try {
       await dispatch(logout());
-      //перейти на головну сторінку
       navigate('/');
     } catch (error) {
       console.error('Logout failed', error);

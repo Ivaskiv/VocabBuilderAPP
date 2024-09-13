@@ -1,21 +1,6 @@
-import Joi from 'joi';
 import { useState } from 'react';
 import WordForm from './WordForm';
-
-const schema = Joi.object({
-  en: Joi.string()
-    .pattern(/\b[A-Za-z'-]+(?:\s+[A-Za-z'-]+)*\b/)
-    .required()
-    .messages({
-      'string.pattern.base': 'Invalid English word',
-    }),
-  ua: Joi.string()
-    .pattern(/^(?![A-Za-z])[А-ЯІЄЇҐґа-яієїʼ\s]+$/u)
-    .required()
-    .messages({
-      'string.pattern.base': 'Invalid Ukrainian word',
-    }),
-});
+import { editWordSchema } from '../../../infrastructure/utils/validationSchemas';
 
 export default function EditWordForm({ word = { en: '', ua: '' }, onSubmitSuccess, onCancel }) {
   const [values, setValues] = useState(word);
@@ -27,7 +12,7 @@ export default function EditWordForm({ word = { en: '', ua: '' }, onSubmitSucces
   };
 
   const validate = () => {
-    const { error } = schema.validate(values, { abortEarly: false });
+    const { error } = editWordSchema.validate(values, { abortEarly: false });
     if (error) {
       const validationErrors = error.details.reduce((acc, detail) => {
         acc[detail.path[0]] = detail.message;
@@ -48,7 +33,6 @@ export default function EditWordForm({ word = { en: '', ua: '' }, onSubmitSucces
   return (
     <form onSubmit={handleSubmit}>
       <WordForm values={values} errors={errors} handleChange={handleChange} onCancel={onCancel} />
-      <button type="submit">Save</button>
     </form>
   );
 }
