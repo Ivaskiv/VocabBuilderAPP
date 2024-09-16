@@ -62,8 +62,7 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
   //   }
   // }, [row.original.id, onDeleteSuccess]);
 
-  const handleDelete = useCallback(() => {
-    const wordId = row.original.id;
+  const handleDelete = wordId => {
     try {
       removeWord(wordId);
       onDeleteSuccess(wordId);
@@ -72,7 +71,7 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
     } finally {
       setIsPopoverOpen(false);
     }
-  }, [row.original.id, onDeleteSuccess]);
+  };
 
   return (
     <div>

@@ -1,34 +1,44 @@
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { debounce } from 'lodash';
-import fetchCategories from '../../../features/dictionary/categories/categoriesOperations';
+import { useState } from 'react';
+import styles from './styles.module.css';
+import DebouncedInput from './DebouncedInput';
+import CategoriesPopup from '../../forms/wordForm/CategoriesPopup';
+import { CiSearch } from 'react-icons/ci';
 
-export default function Filters({ onFilterChange }) {
-  const dispatch = useDispatch();
+const Filters = ({ onFilterChange }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isCategoriesPopupOpen, setCategoriesPopupOpen] = useState(false);
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+  const handleSearchChange = value => {
+    setSearchTerm(value);
+    onFilterChange({ searchTerm: value, selectedCategory });
+  };
 
-  useEffect(() => {
-    const handler = debounce(() => {
-      onFilterChange({ searchTerm: searchTerm.trim() });
-    }, 300);
-
-    handler();
-
-    return () => {
-      handler.cancel();
-    };
-  }, [searchTerm, onFilterChange]);
+  const handleSelectCategory = category => {
+    setSelectedCategory(category);
+    setCategoriesPopupOpen(false);
+    onFilterChange({ searchTerm, selectedCategory: category });
+  };
 
   return (
-    <input
-      type="text"
-      value={searchTerm}
-      onChange={e => setSearchTerm(e.target.value)}
-      placeholder="Search..."
-    />
+    <div className={styles.filters}>
+      <DebouncedInput value={searchTerm} onChange={handleSearchChange} placeholder="Search..." />
+      <CiSearch />
+
+      <div className={styles.categorySelector}>
+        <button onClick={() => setCategoriesPopupOpen(!isCategoriesPopupOpen)}>
+          {selectedCategory || 'Categories 123'}
+        </button>
+        {isCategoriesPopupOpen && (
+          <CategoriesPopup
+            isOpen={isCategoriesPopupOpen}
+            onClose={() => setCategoriesPopupOpen(false)}
+            onSelectCategory={handleSelectCategory}
+          />
+        )}
+      </div>
+    </div>
   );
-}
+};
+
+export default Filters;

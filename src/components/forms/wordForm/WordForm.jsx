@@ -1,62 +1,121 @@
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { useState, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useForm } from '@tanstack/react-form';
+import styles from './styles.module.css';
+import { addWordSchema, wordFormSchema } from '../../../infrastructure/utils/validationSchemas';
+import useFormContext from './useFormContext';
+import CategoriesPopup from './CategoriesPopup';
+import WerbTypeSwitch from '../../dashboard/WerbTypeSwitch';
+import { fetchCategories } from '../../../infrastructure/utils/data';
 
-const schema = Joi.object({
-  category: Joi.string().required().label('Category'),
-  en: Joi.string()
-    .regex(/\b[A-Za-z'-]+(?:\s+[A-Za-z'-]+)*\b/)
-    .required()
-    .label('English word')
-    .messages({
-      'string.pattern.base': 'Invalid English word',
-    }),
-  ua: Joi.string()
-    .regex(/^(?![A-Za-z])[А-ЯІЄЇҐґа-яієїʼ\s]+$/u)
-    .required()
-    .label('Ukrainian word')
-    .messages({
-      'string.pattern.base': 'Invalid Ukrainian word',
-    }),
-  verbType: Joi.when('category', {
-    is: 'Verb',
-    then: Joi.string().valid('regular', 'irregular').required().label('Verb Type'),
-    otherwise: Joi.optional(),
-  }),
-});
+const WordForm = ({ onSubmit, onClose, isEditMode = false }) => {
+  const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
+  const categoryButtonRef = useRef(null);
 
-export default function WordForm({ initialValues, onSubmitSuccess, onClose, mode }) {
+  const { initialValues, submitForm, formSchema } = useFormContext();
+
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: initialValues,
-    resolver: joiResolver(schema),
-    mode: 'onBlur',
+    data: categories,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchCategories,
+    enabled: isCategoryPopupOpen,
   });
 
-  const onSubmit = async values => {
+  const schema = isEditMode ? formSchema || wordFormSchema : addWordSchema;
+
+  const form = useForm({
+    defaultValues: initialValues || {
+      en: '',
+      ua: '',
+      category: '',
+      verbType: '',
+    },
+    validate: schema.validate,
+    mode: 'onChange',
+  });
+
+  const { formState, handleSubmit, register, setError } = form;
+  const { values, errors } = formState;
+
+  const handleFormSubmit = async event => {
+    event.preventDefault();
+    const validationErrors = schema.validate(values, {
+      abortEarly: false,
+    }).error;
+    if (validationErrors) {
+      validationErrors.details.forEach(detail => {
+        setError(detail.path[0], { type: 'manual', message: detail.message });
+      });
+      return;
+    }
     try {
-      if (mode === 'add') {
-        await axios.post('/words/add', values);
-      } else {
-        await axios.post(`/words/${values.id}/edit`, values);
-      }
-      onSubmitSuccess();
+      await (submitForm ? submitForm(values) : onSubmit(values));
       onClose();
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleCategorySelect = category => {
+    setError('category', { type: 'manual', message: '' });
+    form.setValue('category', category);
+    setIsCategoryPopupOpen(false);
+  };
+
   return (
-    <form id="word-form" onSubmit={handleSubmit(onSubmit)}>
-      <input {...register('en')} placeholder="English word" />
-      {errors.en && <span>{errors.en.message}</span>}
-      <input {...register('ua')} placeholder="Ukrainian word" />
-      {errors.ua && <span>{errors.ua.message}</span>}
+    <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.word_form}>
+      <div>
+        <label htmlFor="en">English</label>
+        <input id="en" {...register('en')} />
+        {errors.en && <p>{errors.en.message}</p>}
+      </div>
+
+      <div>
+        <label htmlFor="ua">Ukrainian</label>
+        <input id="ua" {...register('ua')} />
+        {errors.ua && <p>{errors.ua.message}</p>}
+      </div>
+
+      {!isEditMode && (
+        <div>
+          <label htmlFor="category"></label>
+          <button
+            type="button"
+            onClick={() => setIsCategoryPopupOpen(true)}
+            className={styles.category_button}
+            ref={categoryButtonRef}
+          >
+            {values.category || 'Select category'}
+          </button>
+          {errors.category && <p>{errors.category.message}</p>}
+
+          <CategoriesPopup
+            isOpen={isCategoryPopupOpen}
+            onClose={() => setIsCategoryPopupOpen(false)}
+            onSelectCategory={handleCategorySelect}
+            anchorElement={categoryButtonRef.current}
+            categories={categories}
+            loading={isLoading}
+            error={isError}
+          />
+        </div>
+      )}
+
+      {values.category === 'Verb' && !isEditMode && (
+        <>
+          <label>Verb</label>
+          <WerbTypeSwitch
+            selectedVerbType={values.verbType || ''}
+            onChange={e => form.setValue('verbType', e.target.value)}
+          />
+          {errors.verbType && <p>{errors.verbType.message}</p>}
+        </>
+      )}
     </form>
   );
-}
+};
+
+export default WordForm;

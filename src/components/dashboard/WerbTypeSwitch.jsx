@@ -1,4 +1,4 @@
-const VerbType = ({ selectedVerbType, onChange }) => {
+const WerbTypeSwitch = ({ selectedVerbType, onChange }) => {
   return (
     <div>
       <label>
@@ -23,4 +23,4 @@ const VerbType = ({ selectedVerbType, onChange }) => {
   );
 };
 
-export default VerbType;
+export default WerbTypeSwitch;

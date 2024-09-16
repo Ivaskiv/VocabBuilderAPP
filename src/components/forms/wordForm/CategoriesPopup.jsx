@@ -26,11 +26,12 @@ const fetchCategories = async (setLoading, setError) => {
   }
 };
 
-export default function CategoriesPopup({ isOpen, onClose, onSelectCategory }) {
-  const { refs, floatingStyles, context } = useFloating({
+export default function CategoriesPopup({ isOpen, onClose, onSelectCategory, anchorElement }) {
+  const { x, y, reference, floating, strategy, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: onClose,
-    middleware: [offset(8), flip(), shift()],
+    middleware: [offset(10), flip(), shift({ padding: 8 })],
+    placement: 'bottom-start',
   });
   const [categories, setCategories] = useState([]);
   const [selectedVerbType, setSelectedVerbType] = useState('');
@@ -50,6 +51,11 @@ export default function CategoriesPopup({ isOpen, onClose, onSelectCategory }) {
       loadCategiries();
     }
   }, [isOpen]);
+  useEffect(() => {
+    if (anchorElement) {
+      reference(anchorElement);
+    }
+  }, [anchorElement, reference]);
 
   const handleRadioChange = e => {
     setSelectedVerbType(e.target.value);
@@ -61,11 +67,15 @@ export default function CategoriesPopup({ isOpen, onClose, onSelectCategory }) {
     <FloatingPortal>
       <FloatingFocusManager context={context}>
         <div
-          ref={refs.setFloating}
-          style={floatingStyles}
+          ref={floating}
+          style={{
+            position: strategy,
+            top: y ?? 0,
+            left: x ?? 0,
+            ...floatingStyles,
+          }}
           className={styles.popup}
           aria-placeholder="Categories"
-          onScroll={scroll}
         >
           {loading && <p>Loading categories...</p>}
           {error && <p>{error}</p>}

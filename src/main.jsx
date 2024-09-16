@@ -9,6 +9,10 @@ import App from './App.jsx';
 import { HelmetProvider } from 'react-helmet-async';
 import { persistor, store } from './infrastructure/store/store.js';
 import ModalProvider from './components/modals/ModalProvider.jsx';
+import FormProvider from './components/forms/wordForm/FormProvider.jsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -16,9 +20,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <HelmetProvider>
-            <ModalProvider>
-              <App />
-            </ModalProvider>
+            <QueryClientProvider client={queryClient}>
+              <ModalProvider>
+                <FormProvider>
+                  <App />
+                </FormProvider>
+              </ModalProvider>
+            </QueryClientProvider>
           </HelmetProvider>
         </BrowserRouter>
       </PersistGate>

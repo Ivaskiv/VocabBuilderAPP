@@ -96,4 +96,12 @@ export const removeWord = wordId => {
   }
 };
 
+export const fetchCategories = async () => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(getCategories());
+    }, 1000);
+  });
+};
+
 export default defaultData;

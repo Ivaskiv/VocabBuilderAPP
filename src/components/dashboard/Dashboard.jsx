@@ -3,12 +3,12 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { MdArrowRightAlt } from 'react-icons/md';
 import Statistics from '../common/Statistics';
 import AddWordBtn from '../common/addWordButton/AddWordBtn';
-import Filters from '../common/filter/Filters';
-import CategoriesPopup from '../../features/dictionary/categories/CategoriesPopup';
 import { useState } from 'react';
-import VerbType from './verbType';
+import WerbTypeSwitch from './WerbTypeSwitch';
+// import Filters from '../common/filter/Filters';
+import CategoriesPopup from '../forms/wordForm/CategoriesPopup';
 
-const Dashboard = () => {
+export default function Dashboard() {
   const [isCategoriesPopupOpen, setIsCategoriesPopupOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('Categories');
   const [verbType, setVerbType] = useState('');
@@ -31,8 +31,7 @@ const Dashboard = () => {
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboard_left}>
-        <Filters />
-
+        {/* <Filters /> */}
         <button onClick={toggleCategoriesPopup} className={styles.selector_button}>
           Categories
           {isCategoriesPopupOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
@@ -45,7 +44,7 @@ const Dashboard = () => {
           />
         )}
         {selectedCategory === 'Verb' && (
-          <VerbType selectedVerbType={verbType} onChange={handleRadioChange} />
+          <WerbTypeSwitch selectedVerbType={verbType} onChange={handleRadioChange} />
         )}
       </div>
       <div>
@@ -59,6 +58,4 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
-
-export default Dashboard;
+}
