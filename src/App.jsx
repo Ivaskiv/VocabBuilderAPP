@@ -7,9 +7,9 @@ import { Provider, useDispatch } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import { store, persistor } from './infrastructure/store/store.js';
-import RestrictedRoute from './features/routes/RestrictedRoute.jsx';
-// import PrivateRoute from './features/routes/PrivateRoute.jsx';
+import RestrictedRoute from './infrastructure/atoms/RestrictedRoute.jsx';
 import { getCurrentUser } from './features/auth/authOperations.js';
+import Test from './infrastructure/testing/components/Test.jsx';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const MainLayout = lazy(() => import('./components/layouts/MainLayout.jsx'));
@@ -41,7 +41,7 @@ const App = () => {
                   path="/dictionary"
                   element={<PrivateRoute component={<Dictionary />} redirectTo="/dictionary" />}
                 /> */}
-                {/* 
+                {/*
                 <Route
                   path="/recommend"
                   element={<PrivateRoute component={<Recommend />} redirectTo="/recommend" />}
@@ -75,6 +75,7 @@ const App = () => {
                 path="/login"
                 element={<RestrictedRoute component={<Login />} redirectTo="/" />}
               />
+              <Route path="/test" element={<Test />} />
             </Routes>
             <ToastContainer
               position="top-center"

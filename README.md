@@ -1,8 +1,8 @@
-# React + Vite
+1. refs (useRef, forwardRef)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- write component that every second randomly change position of element and logs it's position every
+  1.5 second logs element's position
+- write component that every second randomly change value and on click logs it's current value
+- learn what forwardRef do
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. style popover and use it in DictionaryRecordActionCell (without modal opening)

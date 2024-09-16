@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../../infrastructure/hooks/useAuth.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 const RestrictedRoute = ({ component, redirectTo }) => {
   const { isLogin } = useAuth();

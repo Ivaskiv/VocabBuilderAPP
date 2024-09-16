@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addWord, deleteWord, fetchWords, updateWord } from './wordsOperations';
+import { addWord, deleteWord, fetchWords, updateWord } from './operations';
 
 const initialState = {
   words: [],

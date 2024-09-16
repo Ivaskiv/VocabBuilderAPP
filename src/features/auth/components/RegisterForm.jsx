@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import styles from '../../assets/styles/forms.module.css';
-import authSchema from '../../infrastructure/utils/authSchema';
+import authSchema from '../../../infrastructure/utils/authSchema';
 
-const LoginForm = ({ onSubmit }) => {
+const RegisterForm = ({ onSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -25,12 +25,16 @@ const LoginForm = ({ onSubmit }) => {
     try {
       await onSubmit(data);
     } catch (error) {
-      toast.error('Login failed. Please try again.');
+      toast.error('Registration failed. Please try again.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
+      <label className={styles.field}>
+        <input type="text" placeholder="Name" {...register('name')} />
+        {errors.name && <p className={styles.validation_error}>{errors.name.message}</p>}
+      </label>
       <label className={styles.field}>
         <input type="email" placeholder="Email" {...register('email')} />
         {errors.email && <p className={styles.validation_error}>{errors.email.message}</p>}
@@ -53,10 +57,10 @@ const LoginForm = ({ onSubmit }) => {
         className={`${styles.button} ${isValid ? styles.active_button : styles.inactive_button}`}
         disabled={!isValid}
       >
-        Login
+        Register
       </button>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

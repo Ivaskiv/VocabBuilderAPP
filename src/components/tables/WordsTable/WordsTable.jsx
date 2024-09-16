@@ -35,9 +35,7 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
       cell: info => (
         <div className={styles.progress_container}>
           {`${info.getValue()}%`}
-          <ModalProvider>
-            <ProgressBar progress={info.getValue()} />
-          </ModalProvider>
+          <ProgressBar progress={info.getValue()} />
         </div>
       ),
     }),

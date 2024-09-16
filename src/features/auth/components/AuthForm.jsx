@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import authSchema from '../../infrastructure/utils/authSchema';
+import authSchema from '../../../infrastructure/utils/authSchema';
 
 const AuthForm = ({
   title,

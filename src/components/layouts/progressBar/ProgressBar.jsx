@@ -1,4 +1,5 @@
 import styles from './styles.module.css';
+
 const ProgressBar = ({ progress }) => {
   const normalizedProgress = Math.min(100, Math.max(0, progress));
   const radius = 50;

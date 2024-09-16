@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
 import { useState } from 'react';
 
-export default function FooterModalButtons({ isEditing, onCancel }) {
+export default function FooterModalButtons({ isEditing, onClick, onCancel }) {
   const [isActive, setIsActive] = useState(isEditing);
 
   return (
@@ -10,7 +10,10 @@ export default function FooterModalButtons({ isEditing, onCancel }) {
         type="submit"
         form="word-form"
         className={isActive ? 'active' : 'inactive'}
-        onClick={() => setIsActive(true)}
+        onClick={e => {
+          setIsActive(true);
+          onClick(e);
+        }}
       >
         {isEditing ? 'Save' : 'Add'}
       </button>

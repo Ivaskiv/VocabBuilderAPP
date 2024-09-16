@@ -5,8 +5,8 @@ import storage from 'redux-persist/lib/storage';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
 import userReducer from '../../features/auth/authSlice';
-import categoriesReducer from '../../features/dictionary/categories/categoriesSlice';
-import wordsReducer from '../../features/dictionary/words/wordsSlice';
+import categoriesReducer from '../../features/category/categoriesSlice';
+import wordsReducer from '../../features/dictionary/redux/slice';
 
 const rootReducer = combineReducers({
   auth: userReducer,
