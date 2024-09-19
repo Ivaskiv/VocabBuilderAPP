@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import styles from '../../assets/styles/forms.module.css';
+import styles from './styles.module.css';
 import authSchema from '../../../infrastructure/utils/authSchema';
 
 const RegisterForm = ({ onSubmit }) => {

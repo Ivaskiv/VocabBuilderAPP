@@ -6,10 +6,8 @@ import {
 } from '@tanstack/react-table';
 import styles from './styles.module.css';
 import ProgressBar from '../../layouts/progressBar/ProgressBar';
+import DictionaryActionCell from '../../../features/dictionary/components/DictionaryRecordActionCell/DictionaryActionCell';
 import defaultData from '../../../infrastructure/utils/data';
-import DictionaryActionCell from '../../layouts/dictionaryActionCell/DictionaryActionCell';
-import ModalProvider from '../../modals/ModalProvider';
-// import ModalProvider from '../../modals/ModalProvider';
 
 const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
   const columnHelper = createColumnHelper();

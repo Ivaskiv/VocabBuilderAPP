@@ -1,4 +1,4 @@
-import styles from '../../assets/styles/forms.module.css';
+import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

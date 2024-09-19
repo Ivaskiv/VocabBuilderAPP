@@ -1,9 +1,9 @@
-import styles from '../../assets/styles/userBar.module.css';
-import sprite from '../../assets/icons/sprite.svg';
 import { MdArrowRightAlt } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../features/auth/authOperations';
 import { useNavigate } from 'react-router-dom';
+import sprite from '../../../assets/icons/sprite.svg';
+import { logout } from '../../../features/auth/redux/authOperations';
+import styles from './styles.module.css';
 
 const UserBar = ({ user }) => {
   const dispatch = useDispatch();
