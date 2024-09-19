@@ -3,13 +3,13 @@ import {
   selectIsLogin,
   selectIsRefreshing,
   selectAuthUser,
-} from '../../features/auth/authSlice.js';
+} from '../../features/auth/redux/authSlice';
 
 export const useAuth = () => {
   const isLogin = useSelector(selectIsLogin);
   const isRefreshing = useSelector(selectIsRefreshing);
   const user = useSelector(selectAuthUser);
-  console.log('useAuth hook:', { isLogin, isRefreshing, user });
+  // console.log('useAuth hook:', { isLogin, isRefreshing, user });
 
   return {
     isLogin,

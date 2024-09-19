@@ -42,3 +42,22 @@
   margin-top: 20px;
   text-align: right;
 }
+/* popover */
+.popover_btn {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  padding: 0;
+}
+.icon_edit,
+.icon_del {
+  padding-right: 8px;
+  width: 16px;
+  height: 16px;
+}
+.icon_edit {
+  stroke: #85aa9f;
+}
+.icon_del {
+  fill: #85aa9f;
+}

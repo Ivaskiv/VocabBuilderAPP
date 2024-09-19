@@ -19,6 +19,7 @@ import useModalContext from '../../modals/useModalContext';
 import { removeWord } from '../../../infrastructure/utils/data';
 import ModalProvider from '../../modals/ModalProvider';
 import WordModal from '../../modals/WordModal.jsx';
+import { PopoverTrigger } from '@radix-ui/react-popover';
 
 const defaultContext = {};
 
@@ -75,28 +76,29 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
 
   return (
     <div>
-      <button ref={refs.setReference} {...getReferenceProps()}>
-        <IoIosMore />
-      </button>
-      {isPopoverOpen && (
-        <FloatingFocusManager context={context} modal={false}>
-          <div
-            className={styles.dictionary_popover}
-            ref={refs.setFloating}
-            style={floatingStyles}
-            {...getFloatingProps()}
-          >
-            <button onClick={handleEdit}>
-              <FiEdit2 />
-              Edit
-            </button>
-            <button onClick={handleDelete}>
-              <RiDeleteBin6Line />
-              Delete
-            </button>
-          </div>
-        </FloatingFocusManager>
-      )}
+      <PopoverTrigger>
+        <button ref={refs.setReference} {...getReferenceProps()}>
+          <IoIosMore />
+        </button>
+      </PopoverTrigger>
+
+      <FloatingFocusManager context={context} modal={false}>
+        <div
+          className={styles.dictionary_popover}
+          ref={refs.setFloating}
+          style={floatingStyles}
+          {...getFloatingProps()}
+        >
+          <button onClick={handleEdit}>
+            <FiEdit2 />
+            Edit
+          </button>
+          <button onClick={handleDelete}>
+            <RiDeleteBin6Line />
+            Delete
+          </button>
+        </div>
+      </FloatingFocusManager>
     </div>
   );
 }

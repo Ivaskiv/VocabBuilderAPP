@@ -5,9 +5,9 @@ import imgTitleRegisterWebP from '../assets/img/illustration1x.webp';
 import imgTitleRegister2xWebP from '../assets/img/illustration2x.webp';
 import imgTitleRegister from '../assets/img/illustration2x.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register } from '../features/auth/authOperations';
-import AuthForm from '../components/forms/AuthForm';
 import { useNavigate } from 'react-router-dom';
+import AuthForm from '../features/auth/components/AuthForm';
+import { login, register } from '../features/auth/redux/authOperations';
 
 const Home = () => {
   const dispatch = useDispatch();

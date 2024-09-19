@@ -1,8 +1,6 @@
 @import './assets/styles/base.module.css';
 @import './assets/styles/components.module.css';
 @import './assets/styles/fonts.module.css';
-@import './assets/styles/forms.module.css';
-@import './assets/styles/header.module.css';
 @import './assets/styles/home.module.css';
 @import './assets/styles/userNav.module.css';
 @import './assets/styles/logo.module.css';
