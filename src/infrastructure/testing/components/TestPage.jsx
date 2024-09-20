@@ -1,5 +1,5 @@
-import BallMover from '../../../components/tasks/task1/BallMover';
-import DispalyRundomValue from '../../../components/tasks/task2/DispalyRundomValue';
+import BallMover from '../tasks/features/task1/BallMover';
+import DispalyRundomValue from '../tasks/features/task2/DispalyRundomValue';
 import styles from './styles.module.css';
 
 export default function TestPage() {

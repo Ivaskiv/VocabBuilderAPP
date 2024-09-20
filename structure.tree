@@ -1,0 +1,211 @@
+├── .DS_Store
+├── .gitignore
+├── .prettierrc.json
+├── eslint.config.js
+├── index.html
+├── jsconfig.json
+├── package-lock.json
+├── package.json
+├── README.md
+├── routes.js
+├── src
+│  ├── App.jsx
+│  ├── assets
+│  │  ├── fonts
+│  │  │  ├── FixelAll
+│  │  │  │  └── FixelDisplay
+│  │  │  │    ├── MacPawFixelDisplay-Bold.woff
+│  │  │  │    ├── MacPawFixelDisplay-Bold.woff2
+│  │  │  │    ├── MacPawFixelDisplay-Medium.woff
+│  │  │  │    ├── MacPawFixelDisplay-Medium.woff2
+│  │  │  │    ├── MacPawFixelDisplay-SemiBold.woff
+│  │  │  │    └── MacPawFixelDisplay-SemiBold.woff2
+│  │  │  ├── OnlineWebFonts_COM_28d1acd9f82cd8c8e6577542b3d5e079
+│  │  │  │  └── SF Pro Display Light
+│  │  │  │    └── SFProDisplay-Light.woff2
+│  │  │  ├── SFProDisplay-Light.woff
+│  │  │  ├── SFProDisplay-Regular.woff
+│  │  │  └── SFProDisplay-Regular.woff2
+│  │  ├── icons
+│  │  │  ├── react.svg
+│  │  │  └── sprite.svg
+│  │  └── img
+│  │    ├── blood-report.jpg
+│  │    ├── illustration-menu.jpg
+│  │    ├── illustration.jpg
+│  │    ├── illustration1x.png
+│  │    ├── illustration1x.webp
+│  │    ├── illustration2x.png
+│  │    ├── illustration2x.webp
+│  │    ├── illustration2xWebP.webp
+│  │    ├── illustrationWebP1x.webp
+│  │    ├── illustrationWebP2x.webp
+│  │    └── openorangebookfloating.jpg
+│  ├── components
+│  │  ├── atoms
+│  │  │  ├── Button
+│  │  │  │  ├── index.jsx
+│  │  │  │  └── index.module.css
+│  │  │  └── navigation
+│  │  │    └── NavLink
+│  │  │      ├── index.jsx
+│  │  │      └── index.module.css
+│  │  └── routing
+│  │    ├── PrivateRoute.js
+│  │    └── RestrictedRoute.js
+│  ├── features
+│  │  ├── auth
+│  │  │  ├── components
+│  │  │  │  ├── AuthForm.jsx
+│  │  │  │  ├── LoginForm.jsx
+│  │  │  │  ├── RegisterForm.jsx
+│  │  │  │  └── styles.module.css
+│  │  │  └── redux
+│  │  │    ├── authOperations.js
+│  │  │    └── authSlice.js
+│  │  ├── category
+│  │  │  ├── components
+│  │  │  │  ├── CategoriesPopup.jsx
+│  │  │  │  └── WerbTypeSwitch.jsx
+│  │  │  └── redux
+│  │  │    ├── categoriesOperations.js
+│  │  │    ├── categoriesSelectors.js
+│  │  │    └── categoriesSlice.js
+│  │  ├── dashboard
+│  │  │  └── components
+│  │  │    ├── addWordButton
+│  │  │    │  ├── AddWordBtn.jsx
+│  │  │    │  └── styles.module.css
+│  │  │    └── dashboard
+│  │  │      ├── Dashboard.jsx
+│  │  │      └── styles.module.css
+│  │  ├── dictionary
+│  │  │  ├── components
+│  │  │  │  ├── CreateDictionaryRecordFormModal.jsx
+│  │  │  │  ├── DictionaryRecordActionCell
+│  │  │  │  │  ├── DictionaryActionCell.jsx
+│  │  │  │  │  ├── index.jsx
+│  │  │  │  │  └── styles.module.css
+│  │  │  │  └── popover
+│  │  │  │    ├── ArrowTooltip.jsx
+│  │  │  │    ├── Popover.jsx
+│  │  │  │    ├── PopoverContent.jsx
+│  │  │  │    ├── PopoverTrigger.jsx
+│  │  │  │    ├── styles.module.css
+│  │  │  │    ├── usePopover.js
+│  │  │  │    └── usePopoverContext.js
+│  │  │  └── redux
+│  │  │    ├── operations.js
+│  │  │    └── slice.js
+│  │  ├── filter
+│  │  │  ├── DebouncedInput.jsx
+│  │  │  ├── Filters.jsx
+│  │  │  └── redux
+│  │  │    └── filtersSlice.js
+│  │  ├── forms
+│  │  │  └── wordForm
+│  │  │    ├── components
+│  │  │    │  ├── AddWordForm.jsx
+│  │  │    │  ├── EditWordForm.jsx
+│  │  │    │  └── styles.module.css
+│  │  │    ├── FormProvider.js
+│  │  │    ├── tanstack
+│  │  │    │  └── WordForm.jsx
+│  │  │    └── useFormContext.js
+│  │  ├── modals
+│  │  │  ├── components
+│  │  │  │  ├── DynamicFormModal.jsx
+│  │  │  │  ├── FooterModalButtons.jsx
+│  │  │  │  ├── Modal.jsx
+│  │  │  │  ├── styles.module.css
+│  │  │  │  └── WordModal.jsx
+│  │  │  ├── floatingUi
+│  │  │  │  └── useModalContext.js
+│  │  │  └── ModalProvider.js
+│  │  ├── recommend
+│  │  │  └── redux
+│  │  │    ├── operations.js
+│  │  │    └── slice.js
+│  │  ├── tables
+│  │  │  └── WordsTable
+│  │  │    ├── styles.module.css
+│  │  │    └── WordsTable.jsx
+│  │  └── training
+│  │    ├── ProgressBar.jsx
+│  │    ├── redux
+│  │    │  ├── trainingOperations.js
+│  │    │  └── trainingSlice.js
+│  │    └── TrainingRoom.jsx
+│  ├── index.css
+│  ├── infrastructure
+│  │  ├── api
+│  │  │  └── init.js
+│  │  ├── hooks
+│  │  │  ├── useAuth.js
+│  │  │  └── useFetch.js
+│  │  ├── store
+│  │  │  ├── notificationSlice.js
+│  │  │  └── store.js
+│  │  ├── testing
+│  │  │  ├── components
+│  │  │  │  ├── styles.module.css
+│  │  │  │  └── TestPage.jsx
+│  │  │  ├── popoverDan
+│  │  │  │  ├── components
+│  │  │  │  │  ├── Popover
+│  │  │  │  │  │  ├── index.jsx
+│  │  │  │  │  │  └── index.style.scss
+│  │  │  │  │  └── PopoverProvider.jsx
+│  │  │  │  ├── floatingUi
+│  │  │  │  │  └── index.js
+│  │  │  │  └── repository
+│  │  │  │    └── index.js
+│  │  │  └── tasks
+│  │  │    └── features
+│  │  │      ├── task1
+│  │  │      │  ├── Ball.jsx
+│  │  │      │  ├── BallMover.jsx
+│  │  │      │  └── styles.module.css
+│  │  │      └── task2
+│  │  │        ├── DispalyRundomValue.jsx
+│  │  │        ├── styles.module.css
+│  │  │        └── ValueDisplay.jsx
+│  │  └── utils
+│  │    ├── authSchema.js
+│  │    ├── constants.js
+│  │    ├── data.js
+│  │    ├── helpers.js
+│  │    └── validationSchemas.js
+│  ├── layouts
+│  │  ├── header
+│  │  │  ├── Header.jsx
+│  │  │  └── styles.module.css
+│  │  ├── logo
+│  │  │  ├── Logo.jsx
+│  │  │  └── styles.module.css
+│  │  ├── MainLayout.jsx
+│  │  ├── progressBar
+│  │  │  ├── ProgressBar.jsx
+│  │  │  └── styles.module.css
+│  │  ├── userBar
+│  │  │  ├── styles.module.css
+│  │  │  └── UserBar.jsx
+│  │  └── userNav
+│  │    ├── UserNav.jsx
+│  │    └── userNav.module.css
+│  ├── main.jsx
+│  └── pages
+│    ├── dictionary
+│    │  ├── Dictionary.jsx
+│    │  └── styles.module.css
+│    ├── home
+│    │  ├── Home.jsx
+│    │  └── styles.module.css
+│    ├── recommend
+│    │  ├── Recommend.jsx
+│    │  └── styles.module.css
+│    └── training
+│      ├── styles.module.css
+│      └── Training.jsx
+├── vercel.json
+└── vite.config.js

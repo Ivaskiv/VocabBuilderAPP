@@ -8,8 +8,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import { persistor, store } from './infrastructure/store/store.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
-import ModalProvider from './components/modals/ModalProvider';
-import FormProvider from './components/forms/wordForm/FormProvider';
+import ModalProvider from './features/modals/components/DialogProvider';
+import FormProvider from './features/forms/wordForm/components/FormProvider';
 
 const queryClient = new QueryClient();
 

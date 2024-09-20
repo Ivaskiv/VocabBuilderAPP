@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
-import Dashboard from '../../components/dashboard/Dashboard.jsx';
-import WordsTable from '../../components/tables/WordsTable/WordsTable.jsx';
-import ModalProvider from '../../components/modals/ModalProvider.jsx';
+import Dashboard from '../../features/dashboard/components/dashboard/Dashboard';
+import WordsTable from '../../features/tables/WordsTable/WordsTable';
+import DialogProvider from '../../features/modals/components/DialogProvider';
 // import Dialog from './Dialog.jsx';
 // import DialogAll from './DialogAll.jsx';
 // import WordsPagination from '../components/common/WordsPagination';
@@ -11,17 +11,10 @@ const Dictionary = () => {
     <div className={styles.dictionary_page}>
       <Dashboard />
       <div>
-        <ModalProvider>
+        <DialogProvider>
           <WordsTable />
-        </ModalProvider>
+        </DialogProvider>
       </div>
-      {/* <div>
-        <h1>Floating UI — Dialog</h1>
-        <ModalProvider>
-          <Dialog />
-          <DialogAll />
-        </ModalProvider>
-      </div> */}
 
       {/* <WordsPagination /> */}
     </div>

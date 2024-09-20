@@ -1,3 +1,5 @@
+@import '../../../../index.css';
+
 /* styles.module.css */
 .modal_backdrop {
   position: fixed;
