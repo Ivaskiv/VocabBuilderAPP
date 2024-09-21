@@ -119,19 +119,13 @@ const App = () => {
             <Routes>
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Home />} />
-
                 <Route path="/dictionary" element={<Dictionary />} />
-
                 <Route path="/recommend" element={<Recommend />} />
-
                 <Route path="/training" element={<Training />} />
-
                 <Route path="/testing" element={<TestPage />} />
               </Route>
-
               {/* Public authentication pages */}
               <Route path="/register" element={<RegisterForm />} />
-
               <Route path="/login" element={<LoginForm />} />
             </Routes>
             <ToastContainer

@@ -1,18 +1,13 @@
-import { useContext } from 'react';
 import styles from './styles.module.css';
 import { FaPlus } from 'react-icons/fa6';
-import ModalProvider, { ModalContext } from '../../../modals/components/DialogProvider';
 import Modal from '../../../modals/components/Modal';
+import { useDialogContext } from '../../../modals/floatingUi/useDialogContext';
 
 const AddWordBtn = () => {
-  const { openModal } = useContext(ModalContext);
+  const { openModal } = useDialogContext();
 
   const handleOpenModal = () => {
-    openModal(
-      <ModalProvider>
-        <Modal mode="add" />
-      </ModalProvider>
-    );
+    openModal(<Modal mode="add" />);
   };
 
   return (

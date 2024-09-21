@@ -7,6 +7,8 @@ import Statistics from '../statistics/Statistics';
 import AddWordBtn from '../addWordButton/AddWordBtn';
 import WerbTypeSwitch from '../../../category/components/WerbTypeSwitch';
 import CategoriesPopup from '../../../category/components/CategoriesPopup';
+import { Dialog } from '../../../modals/components/Dialog';
+import { DialogProvider } from '../../../modals/components/DialogProvider';
 
 export default function Dashboard() {
   const [isCategoriesPopupOpen, setIsCategoriesPopupOpen] = useState(false);
@@ -50,7 +52,12 @@ export default function Dashboard() {
       <div>
         <div className={styles.dashboard_right}>
           <Statistics />
-          <AddWordBtn />
+          <DialogProvider>
+            <Dialog>
+              <AddWordBtn />
+            </Dialog>
+          </DialogProvider>
+
           <a href="/training">
             Train oneself <MdArrowRightAlt />
           </a>

@@ -1,19 +1,20 @@
 // Modal.js
-import { Dialog, DialogContent, DialogClose } from './DialogContent';
 import { useDialogContext } from '../floatingUi/useDialogContext';
+import { Dialog } from './Dialog';
+import { DialogClose, DialogContent } from './DialogContent';
 
-export const Modal = ({ title, children }) => {
-  const { isOpen, closeModal } = useDialogContext();
+const Modal = () => {
+  const { isOpen, closeModal, modalContent } = useDialogContext();
 
   return (
     isOpen && (
       <Dialog open={isOpen} onOpenChange={closeModal}>
         <DialogContent>
-          <h2>{title}</h2>
-          {children}
+          {modalContent}
           <DialogClose onClick={closeModal}>Close</DialogClose>
         </DialogContent>
       </Dialog>
     )
   );
 };
+export default Modal;

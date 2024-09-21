@@ -1,6 +1,4 @@
-//UseDialog.js
-import { useClick, useDismiss, useInteractions, useRole } from '@floating-ui/react';
-import { useFloating } from '@floating-ui/react-dom';
+import { useClick, useDismiss, useFloating, useInteractions, useRole } from '@floating-ui/react';
 import { useMemo, useState } from 'react';
 
 export function useDialog({
@@ -9,17 +7,17 @@ export function useDialog({
   onOpenChange: setControlledOpen,
 } = {}) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(initialOpen);
-  const [labelId, setLabelId] = useState();
-  const [descriptionId, setDescriptionId] = useState();
   const open = controlledOpen ?? uncontrolledOpen;
   const setOpen = setControlledOpen ?? setUncontrolledOpen;
 
-  const data = useFloating({ open, onOpenChange: setOpen });
-  const context = data.context;
+  const [labelId, setLabelId] = useState();
+  const [descriptionId, setDescriptionId] = useState();
 
-  const click = useClick(context, { enabled: controlledOpen == null });
-  const dismiss = useDismiss(context, { outsidePressEvent: 'mousedown' });
-  const role = useRole(context);
+  const data = useFloating({ open, onOpenChange: setOpen });
+
+  const dismiss = useDismiss(data.context, { outsidePressEvent: 'mousedown' });
+  const role = useRole(data.context);
+  const click = useClick(data.context, { enabled: controlledOpen == null });
 
   const interactions = useInteractions([click, dismiss, role]);
 

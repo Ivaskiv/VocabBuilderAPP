@@ -1,5 +1,3 @@
-//DialogContent.jsx
-
 import {
   FloatingFocusManager,
   FloatingOverlay,

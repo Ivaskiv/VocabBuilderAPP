@@ -1,11 +1,7 @@
-//DialogProvider.jsx
-import { createContext, useState } from 'react';
-import { Dialog } from './Dialog';
-import { DialogContent } from './DialogContent';
+import { useState } from 'react';
+import { DialogContext } from '../floatingUi/useDialogContext';
 
-export const DialogContext = createContext();
-
-export default function DialogProvider({ children }) {
+export function DialogProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -14,22 +10,11 @@ export default function DialogProvider({ children }) {
     setIsOpen(true);
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
-    setModalContent(null);
-  };
+  const closeModal = () => setIsOpen(false);
 
   return (
-    <DialogContext.Provider value={{ isOpen, modalContent, openModal, closeModal }}>
+    <DialogContext.Provider value={{ isOpen, openModal, closeModal, modalContent }}>
       {children}
-      {isOpen && (
-        <Dialog>
-          <DialogContent>
-            {modalContent}
-            <button onClick={closeModal}>Close</button>
-          </DialogContent>
-        </Dialog>
-      )}
     </DialogContext.Provider>
   );
 }
