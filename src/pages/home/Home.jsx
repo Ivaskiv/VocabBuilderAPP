@@ -1,9 +1,9 @@
 // Home.jsx
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
-import imgTitleRegisterWebP from '../assets/img/illustration1x.webp';
-import imgTitleRegister2xWebP from '../assets/img/illustration2x.webp';
-import imgTitleRegister from '../assets/img/illustration2x.png';
+import imgTitleRegisterWebP from '../../assets/img/illustration1x.webp';
+import imgTitleRegister2xWebP from '../../assets/img/illustration2x.webp';
+import imgTitleRegister from '../../assets/img/illustration2x.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AuthForm from '../../features/auth/components/AuthForm';

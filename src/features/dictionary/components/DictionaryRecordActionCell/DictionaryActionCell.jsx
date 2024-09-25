@@ -11,24 +11,25 @@ import { arrow, flip, offset, shift } from '@floating-ui/react-dom';
 import { PopoverTrigger } from '../popover/PopoverTrigger';
 import { PopoverContent } from '../popover/PopoverContent';
 import { ArrowTooltip } from '../popover/ArrowTooltip';
-import { useDialogContext } from '../../../modals/floatingUi/useDialogContext';
+import { useDialog } from '../../../modals/floatingUi/useDialog';
 
 export default function DictionaryActionCell({ row, onDeleteSuccess }) {
   const arrowRef = useRef(null);
-  const { openModal } = useDialogContext();
+  const { setOpen, setContent } = useDialog();
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = useCallback(async () => {
     try {
-      removeWord(row.original.id);
+      await removeWord(row.original.id);
       onDeleteSuccess(row.original.id);
     } catch (error) {
       console.error('Error deleting word:', error);
     }
   }, [row.original.id, onDeleteSuccess]);
 
-  const handleEdit = () => {
-    openModal(<EditWordForm initialValues={row.original} />);
-  };
+  const handleEdit = useCallback(() => {
+    setOpen(true);
+    setContent(<EditWordForm initialValues={row.original} />);
+  }, [setContent, setOpen, row.original]);
 
   return (
     <Popover middleware={[offset(10), flip(), shift(), arrow({ element: arrowRef })]}>

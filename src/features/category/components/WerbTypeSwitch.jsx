@@ -1,24 +1,29 @@
 const WerbTypeSwitch = ({ selectedVerbType, onChange }) => {
+  const RadioButton = ({ id, value, checked, onChange, label }) => (
+    <div>
+      <label htmlFor={id}>
+        <input id={id} type="radio" value={value} checked={checked} onChange={onChange} />
+        {label}
+      </label>
+    </div>
+  );
+
   return (
     <div>
-      <label>
-        <input
-          type="radio"
-          value="Regular"
-          checked={selectedVerbType === 'Regular'}
-          onChange={onChange}
-        />
-        Regular
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="Irregular"
-          checked={selectedVerbType === 'Irregular'}
-          onChange={onChange}
-        />
-        Irregular
-      </label>
+      <RadioButton
+        id="regular"
+        value="Regular"
+        checked={selectedVerbType === 'Regular'}
+        onChange={onChange}
+        label="Regular"
+      />
+      <RadioButton
+        id="irregular"
+        value="Irregular"
+        checked={selectedVerbType === 'Irregular'}
+        onChange={onChange}
+        label="Irregular"
+      />
     </div>
   );
 };

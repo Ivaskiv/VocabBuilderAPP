@@ -4,11 +4,9 @@ import { MdArrowRightAlt } from 'react-icons/md';
 import { useState } from 'react';
 // import Filters from '../common/filter/Filters';
 import Statistics from '../statistics/Statistics';
-import AddWordBtn from '../addWordButton/AddWordBtn';
 import WerbTypeSwitch from '../../../category/components/WerbTypeSwitch';
 import CategoriesPopup from '../../../category/components/CategoriesPopup';
-import { Dialog } from '../../../modals/components/Dialog';
-import { DialogProvider } from '../../../modals/components/DialogProvider';
+import AddWordBtn from '../addWordButton/AddWordBtn';
 
 export default function Dashboard() {
   const [isCategoriesPopupOpen, setIsCategoriesPopupOpen] = useState(false);
@@ -52,12 +50,7 @@ export default function Dashboard() {
       <div>
         <div className={styles.dashboard_right}>
           <Statistics />
-          <DialogProvider>
-            <Dialog>
-              <AddWordBtn />
-            </Dialog>
-          </DialogProvider>
-
+          <AddWordBtn onAddWord={word => console.log(`Added word: ${word}`)} />
           <a href="/training">
             Train oneself <MdArrowRightAlt />
           </a>

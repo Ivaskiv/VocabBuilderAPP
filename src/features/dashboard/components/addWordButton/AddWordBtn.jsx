@@ -1,19 +1,21 @@
 import styles from './styles.module.css';
+import AddWordModal from '../../../modals/addWordModal/AddWordModal';
 import { FaPlus } from 'react-icons/fa6';
-import Modal from '../../../modals/components/Modal';
-import { useDialogContext } from '../../../modals/floatingUi/useDialogContext';
+import { forwardRef } from 'react';
+import Dialog from '../../../modals/components/Dialog';
+import { DialogTrigger } from '../../../modals/components/DialogTrigger';
 
-const AddWordBtn = () => {
-  const { openModal } = useDialogContext();
-
-  const handleOpenModal = () => {
-    openModal(<Modal mode="add" />);
-  };
-
+const AddWordBtn = forwardRef(function AddWordBtn({ onAddWord, ...props }, ref) {
   return (
-    <button className={styles.add_word_btn} onClick={handleOpenModal}>
-      Add word <FaPlus className={styles.icon_add} />
-    </button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <div ref={ref} {...props}>
+          Add word <FaPlus className={styles.icon_add} />
+        </div>
+      </DialogTrigger>
+      <AddWordModal onAddWord={onAddWord} />
+    </Dialog>
   );
-};
+});
+
 export default AddWordBtn;

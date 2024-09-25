@@ -1,6 +1,8 @@
+// FormProvider.jsx
+
 import { createContext } from 'react';
 import { addWordSchema, wordFormSchema } from '../../../../infrastructure/utils/validationSchemas';
-import { addWord, editWord } from '../../../../infrastructure/utils/data';
+import { useForm } from '@tanstack/react-form';
 
 export const FormContext = createContext();
 
@@ -13,25 +15,29 @@ const FormProvider = ({ children, initialValues = null }) => {
     verbType: '',
   };
 
-  const submitForm = async (values, isEditMode = false) => {
-    try {
-      if (isEditMode) {
-        await editWord(values);
-        console.log('Word edited:', values);
-      } else {
-        await addWord(values);
-        console.log('Word added:', values);
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    }
-  };
+  const form = useForm({
+    schema: formSchema,
+    defaultValues,
+  });
+
+  // const submitForm = async (values, isEditMode = false) => {
+  //   try {
+  //     if (isEditMode) {
+  //       await editWord(values);
+  //       console.log('Word edited:', values);
+  //     } else {
+  //       await addWord(values);
+  //       console.log('Word added:', values);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error submitting form:', error);
+  //   }
+  // };
 
   return (
-    <FormContext.Provider value={{ formSchema, defaultValues, submitForm }}>
+    <FormContext.Provider value={{ form, formSchema, defaultValues }}>
       {children}
     </FormContext.Provider>
   );
 };
-
 export default FormProvider;

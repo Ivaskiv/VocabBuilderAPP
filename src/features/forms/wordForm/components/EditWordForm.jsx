@@ -3,14 +3,17 @@ import { wordFormSchema } from '../../../../infrastructure/utils/validationSchem
 import FormProvider from './FormProvider';
 import WordForm from '../tanstack/WordForm';
 
-const EditWordForm = ({ initialValues, onClose }) => {
+const EditWordForm = ({ initialValues, onClose, onSubmit }) => {
   const handleSubmit = async data => {
     try {
       editWord(data);
+      if (onSubmit) {
+        onSubmit(data);
+      }
+      onClose();
     } catch (error) {
       console.error('Error editing word:', error);
     }
-    onClose();
   };
 
   return (

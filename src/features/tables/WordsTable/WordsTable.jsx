@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -8,8 +9,12 @@ import styles from './styles.module.css';
 import DictionaryActionCell from '../../dictionary/components/DictionaryRecordActionCell/DictionaryActionCell';
 import defaultData from '../../../infrastructure/utils/data';
 import ProgressBar from '../../../layouts/progressBar/ProgressBar';
+import AddWordModal from '../../modals/addWordModal/AddWordModal';
 
 const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [words, setWords] = useState(data);
+
   const columnHelper = createColumnHelper();
   const columns = [
     columnHelper.accessor('en', {
@@ -45,43 +50,57 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
   ];
 
   const table = useReactTable({
-    data: defaultData,
+    data: words,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const handleAddWord = newWord => {
+    setWords(prevWords => [...prevWords, newWord]);
+  };
+
   if (!data || data.length === 0) {
     return <p>No data variables</p>;
   }
+
   return (
-    <table className={styles.table}>
-      {/* thead */}
-      <thead>
-        {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id} className={styles.tr}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id} className={styles.th}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      {/* tbody */}
-      <tbody>
-        {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <td key={cell.id} className={styles.td}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <button onClick={() => setIsModalOpen(true)}>Add Word</button>
+      <AddWordModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        onAddWord={handleAddWord}
+      />
+
+      <table className={styles.table}>
+        {/* thead */}
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id} className={styles.tr}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id} className={styles.th}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        {/* tbody */}
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <td key={cell.id} className={styles.td}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ import { persistor, store } from './infrastructure/store/store.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import FormProvider from './features/forms/wordForm/components/FormProvider';
-import { DialogProvider } from './features/modals/components/DialogProvider';
+import DialogProvider from './features/modals/components/DialogProvider';
 
 const queryClient = new QueryClient();
 

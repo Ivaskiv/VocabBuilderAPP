@@ -1,43 +1,44 @@
-import { useState, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useForm } from '@tanstack/react-form';
-import { addWordSchema, wordFormSchema } from '../../../../infrastructure/utils/validationSchemas';
-import useFormContext from '../useFormContext';
-import CategoriesPopup from '../../../category/components/CategoriesPopup';
+import { useState, useRef, useEffect } from 'react';
 import { fetchCategories } from '../../../../infrastructure/utils/data';
+import { addWordSchema, wordFormSchema } from '../../../../infrastructure/utils/validationSchemas';
+import CategoriesPopup from '../../../category/components/CategoriesPopup';
 import WerbTypeSwitch from '../../../category/components/WerbTypeSwitch';
+import useFormContext from '../useFormContext';
 
 const WordForm = ({ onSubmit, onClose, isEditMode = false }) => {
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const categoryButtonRef = useRef(null);
 
-  const { initialValues, submitForm, formSchema } = useFormContext();
+  useEffect(() => {
+    if (isCategoryPopupOpen) {
+      const loadCategories = async () => {
+        setIsLoading(true);
+        try {
+          const data = await fetchCategories();
+          setCategories(data);
+          setIsError(false);
+        } catch (error) {
+          console.error('Failed to fetch categories', error);
+          setIsError(true);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      loadCategories();
+    }
+  }, [isCategoryPopupOpen]);
 
-  const {
-    data: categories,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['categories'],
-    queryFn: fetchCategories,
-    enabled: isCategoryPopupOpen,
-  });
-
+  const { form, formSchema } = useFormContext();
+  const { formState, setError } = form;
+  if (!formState) {
+    console.error('formState is undefined');
+    return null;
+  }
+  const { values, errors } = formState || {};
   const schema = isEditMode ? formSchema || wordFormSchema : addWordSchema;
-
-  const form = useForm({
-    defaultValues: initialValues || {
-      en: '',
-      ua: '',
-      category: '',
-      verbType: '',
-    },
-    validate: schema.validate,
-    mode: 'onChange',
-  });
-
-  const { formState, handleSubmit, register, setError } = form;
-  const { values, errors } = formState;
 
   const handleFormSubmit = async event => {
     event.preventDefault();
@@ -51,7 +52,7 @@ const WordForm = ({ onSubmit, onClose, isEditMode = false }) => {
       return;
     }
     try {
-      await (submitForm ? submitForm(values) : onSubmit(values));
+      await onSubmit(values);
       onClose();
     } catch (error) {
       console.error(error);
@@ -65,16 +66,16 @@ const WordForm = ({ onSubmit, onClose, isEditMode = false }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)}>
+    <form onSubmit={handleFormSubmit}>
       <div>
         <label htmlFor="en">English</label>
-        <input id="en" {...register('en')} />
+        <input id="en" {...form.register('en')} />
         {errors.en && <p>{errors.en.message}</p>}
       </div>
 
       <div>
         <label htmlFor="ua">Ukrainian</label>
-        <input id="ua" {...register('ua')} />
+        <input id="ua" {...form.register('ua')} />
         {errors.ua && <p>{errors.ua.message}</p>}
       </div>
 
@@ -112,6 +113,12 @@ const WordForm = ({ onSubmit, onClose, isEditMode = false }) => {
           {errors.verbType && <p>{errors.verbType.message}</p>}
         </>
       )}
+      <div>
+        <button type="submit">{isEditMode ? 'Save' : 'Add'}</button>
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

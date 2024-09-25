@@ -1,36 +1,35 @@
-import { cloneElement, forwardRef, isValidElement } from 'react';
-import { useDialog } from '../floatingUi/useDialog';
-import { useMergeRefs } from '@floating-ui/react';
-import { DialogContext, useDialogContext } from '../floatingUi/useDialogContext';
+// Dialog.jsx
+import { useContext } from 'react';
+import DialogContext from './DialogContext';
+import { useFloating, useClick, useInteractions } from '@floating-ui/react';
 
-export function Dialog({ children, ...options }) {
-  const dialog = useDialog(options);
-
-  return <DialogContext.Provider value={dialog}>{children}</DialogContext.Provider>;
-}
-
-export const DialogTrigger = forwardRef(function DialogTrigger({ children, ...props }, propRef) {
-  const context = useDialogContext();
-  const ref = useMergeRefs([context.refs.setReference, propRef, children?.ref]);
-
-  if (isValidElement(children)) {
-    return cloneElement(children, {
-      ...context.getReferenceProps({
-        ref,
-        'data-state': context.open ? 'open' : 'closed',
-        ...props,
-        ...children.props,
-      }),
-    });
-  }
-
+export const DialogContent = ({ children, onClose }) => {
   return (
-    <button
-      ref={ref}
-      data-state={context.open ? 'open' : 'closed'}
-      {...context.getReferenceProps(props)}
-    >
+    <div className="dialog-content">
       {children}
-    </button>
+      <button type="button" onClick={onClose}>
+        Cancel
+      </button>
+    </div>
   );
-});
+};
+
+export default function Dialog() {
+  const { openModal, closeModal } = useContext(DialogContext);
+
+  const { context } = useFloating({
+    open: false,
+    onOpenChange: isOpen => {
+      if (!isOpen) closeModal();
+    },
+  });
+
+  const click = useClick(context);
+  const { getReferenceProps } = useInteractions([click]);
+
+  const handleOpen = content => {
+    openModal(<DialogContent onClose={closeModal}>{content}</DialogContent>);
+  };
+
+  return { ...getReferenceProps({ onClick: () => handleOpen() }) };
+}

@@ -1,4 +1,4 @@
-import { useClick, useDismiss, useFloating, useInteractions, useRole } from '@floating-ui/react';
+import { useFloating, useClick, useDismiss, useRole, useInteractions } from '@floating-ui/react';
 import { useMemo, useState } from 'react';
 
 export function useDialog({
@@ -7,17 +7,18 @@ export function useDialog({
   onOpenChange: setControlledOpen,
 } = {}) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(initialOpen);
-  const open = controlledOpen ?? uncontrolledOpen;
-  const setOpen = setControlledOpen ?? setUncontrolledOpen;
-
   const [labelId, setLabelId] = useState();
   const [descriptionId, setDescriptionId] = useState();
 
-  const data = useFloating({ open, onOpenChange: setOpen });
+  const open = controlledOpen ?? uncontrolledOpen;
+  const setOpen = setControlledOpen ?? setUncontrolledOpen;
 
-  const dismiss = useDismiss(data.context, { outsidePressEvent: 'mousedown' });
-  const role = useRole(data.context);
-  const click = useClick(data.context, { enabled: controlledOpen == null });
+  const data = useFloating({ open, onOpenChange: setOpen });
+  const context = data.context;
+
+  const click = useClick(context, { enabled: controlledOpen == null });
+  const dismiss = useDismiss(context, { outsidePressEvent: 'mousedown' });
+  const role = useRole(context);
 
   const interactions = useInteractions([click, dismiss, role]);
 

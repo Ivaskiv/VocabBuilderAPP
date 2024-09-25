@@ -1,14 +1,11 @@
-//useDialogContext.js
-import { createContext, useContext } from 'react';
+import { useContext } from 'react';
+import DialogContext from '../components/DialogContext';
 
-export const DialogContext = createContext();
-
-export const useDialogContext = () => {
+export default function useDialogContext() {
   const context = useContext(DialogContext);
-  // console.log('Dialog context:', context);
+  console.log('3333 Context:', context);
 
   if (!context) {
-    throw new Error('useDialogContext must be used within a DialogProvider');
+    throw new Error('Dialog components must be wrapped in <Dialog />');
   }
-  return context;
-};
+}
