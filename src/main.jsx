@@ -9,7 +9,6 @@ import { persistor, store } from './infrastructure/store/store.js';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import FormProvider from './features/forms/wordForm/components/FormProvider';
-import DialogProvider from './features/modals/components/DialogProvider';
 
 const queryClient = new QueryClient();
 
@@ -20,11 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <BrowserRouter>
           <HelmetProvider>
             <QueryClientProvider client={queryClient}>
-              <DialogProvider>
-                <FormProvider>
-                  <App />
-                </FormProvider>
-              </DialogProvider>
+              <FormProvider>
+                <App />
+              </FormProvider>
             </QueryClientProvider>
           </HelmetProvider>
         </BrowserRouter>

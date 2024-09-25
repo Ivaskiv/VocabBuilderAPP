@@ -1,7 +1,7 @@
 import { useFloating, useClick, useDismiss, useRole, useInteractions } from '@floating-ui/react';
 import { useMemo, useState } from 'react';
 
-export function useDialog({
+export function useModal({
   initialOpen = false,
   open: controlledOpen,
   onOpenChange: setControlledOpen,

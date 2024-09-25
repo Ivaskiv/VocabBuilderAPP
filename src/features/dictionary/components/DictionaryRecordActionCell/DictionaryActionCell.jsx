@@ -11,11 +11,11 @@ import { arrow, flip, offset, shift } from '@floating-ui/react-dom';
 import { PopoverTrigger } from '../popover/PopoverTrigger';
 import { PopoverContent } from '../popover/PopoverContent';
 import { ArrowTooltip } from '../popover/ArrowTooltip';
-import { useDialog } from '../../../modals/floatingUi/useDialog';
+import { useModal } from '../../../../infrastructure/modal/repository/useModal';
 
 export default function DictionaryActionCell({ row, onDeleteSuccess }) {
   const arrowRef = useRef(null);
-  const { setOpen, setContent } = useDialog();
+  const { setOpen, setContent } = useModal();
 
   const handleDelete = useCallback(async () => {
     try {

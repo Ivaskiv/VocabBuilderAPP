@@ -9,7 +9,7 @@ import styles from './styles.module.css';
 import DictionaryActionCell from '../../dictionary/components/DictionaryRecordActionCell/DictionaryActionCell';
 import defaultData from '../../../infrastructure/utils/data';
 import ProgressBar from '../../../layouts/progressBar/ProgressBar';
-import AddWordModal from '../../modals/addWordModal/AddWordModal';
+import AddWordModal from '../../dashboard/components/AddWordModal';
 
 const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
