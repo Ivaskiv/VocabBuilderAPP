@@ -25,7 +25,7 @@ const Filters = ({ onFilterChange }) => {
       <DebouncedInput value={searchTerm} onChange={handleSearchChange} placeholder="Search..." />
       <CiSearch />
 
-      <div className={styles.categorySelector}>
+      <div className={styles.CategoriesSelector}>
         <button onClick={() => setCategoriesPopupOpen(!isCategoriesPopupOpen)}>
           {selectedCategory || 'Categories 123'}
         </button>

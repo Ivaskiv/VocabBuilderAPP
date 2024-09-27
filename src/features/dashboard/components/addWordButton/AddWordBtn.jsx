@@ -2,18 +2,23 @@ import styles from './styles.module.css';
 
 import { FaPlus } from 'react-icons/fa6';
 import { forwardRef } from 'react';
-import { ModalTrigger } from '../../../modals/components/ModalTrigger';
-import ModalProvider from '../../../../infrastructure/modal/components/ModalProvider';
-import AddWordFormModal from '../AddWordModal';
+import AddWordFormModal from '../addWordFormModal/AddWordFormModal';
+import ModalTrigger from '../../../../infrastructure/modal/components/ModalTrigger';
+import useModalContext from '../../../../infrastructure/modal/repository/useModalContext';
 
 const AddWordBtn = forwardRef(function AddWordBtn(props, ref) {
+  const { open: openModal } = useModalContext();
+  const handleClick = () => {
+    openModal(<AddWordFormModal />);
+  };
   return (
-    <ModalProvider>
+    <>
       <ModalTrigger ref={ref} {...props}>
-        Add word <FaPlus className={styles.icon_add} />
+        <button type="button" onClick={handleClick} className={styles.add_word_btn}>
+          Add word <FaPlus className={styles.icon_add} />
+        </button>
       </ModalTrigger>
-      <AddWordFormModal />
-    </ModalProvider>
+    </>
   );
 });
 

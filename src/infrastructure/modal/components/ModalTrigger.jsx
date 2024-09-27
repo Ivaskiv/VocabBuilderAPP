@@ -1,18 +1,14 @@
 // ModalTrigger.jsx
 import { forwardRef } from 'react';
-import useModalTrigger from '../repository/useModalTrigger';
+import useModalTrigger from '../repository/useModalTrigger.js';
 
-export default forwardRef(function ModalTrigger({ children, ...props }, ref) {
-  const { toggle } = useModalTrigger();
+const ModalTrigger = forwardRef(function ModalTrigger({ children, ...props }, ref) {
+  const modalTrigger = useModalTrigger();
+  const toggle = modalTrigger ? modalTrigger.toggle : () => {};
   return (
-    <button
-      ref={ref}
-      {...props}
-      type="button"
-      onClick={toggle}
-      data-state={open ? 'open' : 'closed'}
-    >
+    <div ref={ref} {...props} type="button" onClick={toggle}>
       {children}
-    </button>
+    </div>
   );
 });
+export default ModalTrigger;

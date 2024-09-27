@@ -1,7 +1,7 @@
 //DictionaryActionCell.jsx
 import styles from './styles.module.css';
 import Popover from '../popover/Popover';
-import EditWordForm from '../../../forms/wordForm/components/EditWordForm';
+import EditWordFormModal from '../../../dashboard/components/editWordFormModal/EditWordFormModal';
 import { useCallback, useRef } from 'react';
 import { IoIosMore } from 'react-icons/io';
 import { FiEdit2 } from 'react-icons/fi';
@@ -28,7 +28,7 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
 
   const handleEdit = useCallback(() => {
     setOpen(true);
-    setContent(<EditWordForm initialValues={row.original} />);
+    setContent(<EditWordFormModal initialValues={row.original} />);
   }, [setContent, setOpen, row.original]);
 
   return (

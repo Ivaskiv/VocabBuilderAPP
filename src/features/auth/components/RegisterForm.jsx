@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
 import styles from './styles.module.css';
 import authSchema from '../../../infrastructure/utils/authSchema';
 
@@ -25,7 +24,7 @@ const RegisterForm = ({ onSubmit }) => {
     try {
       await onSubmit(data);
     } catch (error) {
-      toast.error('Registration failed. Please try again.');
+      error.message('Registration failed. Please try again.');
     }
   };
 

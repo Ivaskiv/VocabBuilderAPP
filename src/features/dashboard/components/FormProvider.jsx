@@ -1,8 +1,8 @@
 // FormProvider.jsx
 
 import { createContext } from 'react';
-import { addWordSchema, wordFormSchema } from '../../../../infrastructure/utils/validationSchemas';
-import { useForm } from '@tanstack/react-form';
+import { addWordSchema, wordFormSchema } from '../../../infrastructure/utils/validationSchemas';
+import { useForm } from 'react-hook-form';
 
 export const FormContext = createContext();
 

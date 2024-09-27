@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 const apiUrl = `https://vocab-builder-backend.p.goit.global/api`;
 
@@ -27,13 +26,12 @@ export const register = createAsyncThunk(
       setAuthHeader(token);
 
       console.log('Registration successful:', { userName, userEmail });
-      toast.success('Registration successful');
 
       return { token, user: { email: userEmail, name: userName } };
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Registration failed';
       console.error('Registration error:', errorMessage);
-      toast.error(errorMessage);
+      error.message(errorMessage);
       return rejectWithValue(errorMessage);
     }
   }
@@ -51,13 +49,12 @@ export const login = createAsyncThunk(
       setAuthHeader(token);
 
       console.log('Login successful:', { userName, userEmail });
-      toast.success('Login successful');
 
       return { token, user: { email: userEmail, name: userName } };
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Login failed';
       console.error('Login error:', errorMessage);
-      toast.error(errorMessage);
+      error.message(errorMessage);
       return rejectWithValue(errorMessage);
     }
   }
@@ -69,11 +66,10 @@ export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValu
     clearAuthHeader();
 
     console.log('Logout successful');
-    toast.success('User logged out successfully.');
   } catch (error) {
     const errorMessage = error.response?.data?.message || 'Logout failed';
     console.error('Logout error:', errorMessage);
-    toast.error(errorMessage);
+    error.message(errorMessage);
     return rejectWithValue(errorMessage);
   }
 });
@@ -96,7 +92,7 @@ export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) 
   } catch (error) {
     const errorMessage = error.response?.data?.message || 'Failed to refresh user';
     console.error('Failed to refresh user:', errorMessage);
-    toast.error(errorMessage);
+    error.message(errorMessage);
     return thunkAPI.rejectWithValue(errorMessage);
   }
 });
