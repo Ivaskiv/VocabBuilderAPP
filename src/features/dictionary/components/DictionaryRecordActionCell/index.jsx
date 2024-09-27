@@ -17,7 +17,6 @@ import {
 import styles from './styles.module.css';
 import useModalContext from '../../modals/useModalContext';
 import { removeWord } from '../../../infrastructure/utils/data';
-import ModalProvider from '../../modals/ModalProvider';
 import WordModal from '../../modals/WordModal.jsx';
 import { PopoverTrigger } from '@radix-ui/react-popover';
 
@@ -45,9 +44,7 @@ export default function DictionaryActionCell({ row, onDeleteSuccess }) {
   const handleEdit = useCallback(() => {
     setIsPopoverOpen(false);
     openModal(
-      <ModalProvider>
-        <WordModal mode="edit" word={row.original} closeModal={() => setIsPopoverOpen(false)} />
-      </ModalProvider>
+      <WordModal mode="edit" word={row.original} closeModal={() => setIsPopoverOpen(false)} />
     );
   }, [openModal, row.original]);
 

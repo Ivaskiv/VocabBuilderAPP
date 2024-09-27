@@ -1,9 +1,7 @@
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import authSchema from '../../../infrastructure/utils/authSchema';
@@ -23,7 +21,7 @@ const AuthForm = ({
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm({ resolver: yupResolver(authSchema(activeForm)) });
+  } = useForm({ resolver: joiResolver(authSchema(activeForm)) });
 
   const [showPassword, setShowPassword] = useState(false);
   const [isFormFilled, setIsFormFilled] = useState(false);
@@ -133,7 +131,6 @@ const AuthForm = ({
       <p className={styles.link_text}>
         <a href={linkPath}>{linkText}</a>
       </p>
-      <ToastContainer />
     </div>
   );
 };

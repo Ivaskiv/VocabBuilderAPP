@@ -144,7 +144,9 @@ export const getCategories = () => {
 };
 
 export const addWord = newWord => {
+  const newId = defaultData.reduce((maxId, word) => Math.max(maxId, word.id), 0) + 1;
   defaultData.push({
+    id: newId,
     ...newWord,
     progress: 0,
     editDelete: 'Edit/Delete',
@@ -168,12 +170,7 @@ export const removeWord = wordId => {
   }
 };
 
-export const fetchCategories = async () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(getCategories());
-    }, 1000);
-  });
+export const fetchCategories = () => {
+  return getCategories();
 };
-
 export default defaultData;

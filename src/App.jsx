@@ -1,10 +1,8 @@
-import 'react-toastify/dist/ReactToastify.css';
 import './infrastructure/api/init.js';
 import { Route, Routes } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import { Provider, useDispatch } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ToastContainer } from 'react-toastify';
 import { persistor, store } from './infrastructure/store/store.js';
 import { getCurrentUser } from './features/auth/redux/authOperations.js';
 import RegisterForm from './features/auth/components/RegisterForm.jsx';
@@ -128,19 +126,6 @@ const App = () => {
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/login" element={<LoginForm />} />
             </Routes>
-            <ToastContainer
-              position="top-center"
-              autoClose={1000}
-              hideProgressBar
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-              transition="Flip"
-            />
           </div>
         </Suspense>
       </PersistGate>

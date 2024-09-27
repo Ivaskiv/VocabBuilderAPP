@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
 import styles from './styles.module.css';
 import authSchema from '../../../infrastructure/utils/authSchema';
 
@@ -13,7 +12,7 @@ const LoginForm = ({ onSubmit }) => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    resolver: yupResolver(authSchema),
+    resolver: joiResolver(authSchema),
     mode: 'onChange',
   });
 
@@ -25,7 +24,7 @@ const LoginForm = ({ onSubmit }) => {
     try {
       await onSubmit(data);
     } catch (error) {
-      toast.error('Login failed. Please try again.');
+      error.message('Login failed. Please try again.');
     }
   };
 

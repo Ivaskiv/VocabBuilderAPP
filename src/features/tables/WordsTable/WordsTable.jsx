@@ -9,11 +9,11 @@ import styles from './styles.module.css';
 import DictionaryActionCell from '../../dictionary/components/DictionaryRecordActionCell/DictionaryActionCell';
 import defaultData from '../../../infrastructure/utils/data';
 import ProgressBar from '../../../layouts/progressBar/ProgressBar';
-import AddWordModal from '../../dashboard/components/AddWordModal';
+// import AddWordModal from '../../dashboard/components/addWordFormModal/AddWordFormModal';
 
 const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [words, setWords] = useState(data);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [words] = useState(data);
 
   const columnHelper = createColumnHelper();
   const columns = [
@@ -55,9 +55,9 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const handleAddWord = newWord => {
-    setWords(prevWords => [...prevWords, newWord]);
-  };
+  // const handleAddWord = newWord => {
+  //   setWords(prevWords => [...prevWords, newWord]);
+  // };
 
   if (!data || data.length === 0) {
     return <p>No data variables</p>;
@@ -65,12 +65,11 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
 
   return (
     <>
-      <button onClick={() => setIsModalOpen(true)}>Add Word</button>
-      <AddWordModal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        onAddWord={handleAddWord}
-      />
+      {/* //   <AddWordModal
+    //     isOpen={isModalOpen}
+    //     onRequestClose={() => setIsModalOpen(false)}
+    //     onAddWord={handleAddWord}
+    //   /> */}
 
       <table className={styles.table}>
         {/* thead */}
