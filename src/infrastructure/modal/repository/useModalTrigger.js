@@ -1,35 +1,18 @@
-import { forwardRef, useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import useModalContext from './useModalContext';
+import { useMergeRefs } from '@floating-ui/react';
 
-const useModalTrigger = () => {
-  forwardRef(function useModalTrigger() {
-    const { open, setOpen } = useModalContext();
-    const toggle = useCallback(() => {
-      setOpen(prev => !prev);
-    }, [setOpen]);
-    return useMemo(
-      () => ({
-        toggle,
-        open,
-      }),
-      [toggle, open]
-    );
-  });
+export default function useModalTrigger({ ref: outerRef }) {
+  const {
+    refs: { setReference },
+    getReferenceProps,
+  } = useModalContext();
+  const ref = useMergeRefs([setReference, outerRef]);
+  return useMemo(
+    () => ({
+      ref,
+      getReferenceProps,
+    }),
+    [getReferenceProps, ref]
+  );
 };
-export default useModalTrigger;
-
-// const useModalTrigger = () => {
-//   forwardRef(function useModalTrigger() {
-//     const { setOpen } = useModalContext();
-//     const toggle = useCallback(() => {
-//       setOpen(isOpened => !isOpened);
-//     }, [setOpen]);
-//     return useMemo(
-//       () => ({
-//         toggle,
-//       }),
-//       [toggle]
-//     );
-//   });
-// };
-// export default useModalTrigger;

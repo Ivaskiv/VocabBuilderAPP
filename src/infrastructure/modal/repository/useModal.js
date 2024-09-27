@@ -1,7 +1,7 @@
 import { useFloating, useClick, useDismiss, useRole, useInteractions } from '@floating-ui/react';
 import { useMemo, useState } from 'react';
 
-export function useModal({
+export default function useModal({
   initialOpen = false,
   open: controlledOpen,
   onOpenChange: setControlledOpen,
@@ -21,7 +21,7 @@ export function useModal({
   const role = useRole(context);
 
   const interactions = useInteractions([click, dismiss, role]);
-
+  interactions.getItemProps;
   return useMemo(
     () => ({
       open,

@@ -1,19 +1,12 @@
 import { forwardRef } from 'react';
 import style from './index.module.scss';
 import classNames from 'classnames';
-import useModalContext from '../../repository/useModalContext';
+import { useModalClose } from '../../repository';
 
 export default forwardRef(function ModalCloseBtn({ className, ...rest }, ref) {
-  const { setOpen } = useModalContext();
+  const close = useModalClose();
   return (
-    <button
-      {...rest}
-      ref={ref}
-      onClick={() => {
-        setOpen(false);
-      }}
-      className={classNames(style.btn, className)}
-    >
+    <button {...rest} ref={ref} onClick={close} className={classNames(style.btn, className)}>
       X
     </button>
   );

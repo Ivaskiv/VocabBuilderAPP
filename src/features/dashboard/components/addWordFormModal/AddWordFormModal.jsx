@@ -1,11 +1,13 @@
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import styles from './styles.module.css';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { memo, useState } from 'react';
-import { useModal } from '../../../../infrastructure/modal/repository/useModal';
-import FormProvider from '../FormProvider';
+import { memo } from 'react';
 import CategoriesSelector from '../../../category/components/categorySelector/CategoriesSelector';
+import Modal from '../../../../infrastructure/modal/components/Modal';
+import { useSelector } from 'react-redux';
+import { useModalClose } from '../../../../infrastructure/modal/repository';
+import axios from 'axios';
 
 const defaultValues = {
   word: '',
@@ -33,36 +35,28 @@ const schema = Joi.object({
   verbType: Joi.string().valid('Regular', 'Irregular').optional(),
 });
 
-export const Form = memo(function Form({ categories, onAddWord, onClose }) {
+const Form = memo(function Form() {
+  const categories = useSelector();
   const methods = useForm({
     defaultValues,
     resolver: joiResolver(schema),
   });
-
-  // Write here creation logic;
-
-  const onSubmit = data => {
-    console.log(data);
-    onAddWord(data);
-    onClose();
-    // handleAdd(data);
-  };
-
-  const handleCancel = () => {
-    onClose();
-  };
-
+  const close = useModalClose();
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={methods.handleSubmit(data => {
+          console.log(data);
+          axios.post('some-fancy-url', data);
+          close();
+        })}
+      >
         <CategoriesSelector categories={categories} />
-
         <input {...methods.register('ua')} placeholder="Ukrainian word" />
         <input {...methods.register('en')} placeholder="English word" />
-
         <div className={styles.footer_btn}>
           <button type="submit">Add</button>
-          <button type="button" onClick={handleCancel}>
+          <button type="button" onClick={close}>
             Cancel
           </button>
         </div>
@@ -71,36 +65,13 @@ export const Form = memo(function Form({ categories, onAddWord, onClose }) {
   );
 });
 
-export default function AddWordFormModal({ categories }) {
-  const { labelId, descriptionId, getFloatingProps, setOpen } = useModal();
-  const localLabelId = 'add-word-label';
-  const localDescriptionId = 'add-word-description';
-
-  const [words, setWords] = useState([]);
-  const handleAddWord = newWord => {
-    setWords(prevWords => [...prevWords, newWord]);
-    console.log('Words:', words);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function AddWordFormModal() {
   return (
-    <div
-      className={styles.modal}
-      {...getFloatingProps({
-        role: 'dialog',
-        'aria-labelledby': labelId,
-        'aria-describedby': descriptionId,
-      })}
-    >
-      <h2 id={localLabelId}>Add word</h2>
-      <p id={localDescriptionId}>
-        Adding a new word to the dict1ionary is an important step in enriching the language base and
-        expanding the vocabulary.
-      </p>
-      <div className={styles.modalContent}>
-        <Form categories={categories} onAddWord={handleAddWord} onClose={handleClose} />
-      </div>
-    </div>
+    <Modal
+      label="Add word"
+      description="Adding a new word to the dict1ionary is an important step in enriching the language base and
+        expanding the vocabulary."
+      content={<Form />}
+    />
   );
 }
