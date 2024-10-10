@@ -1,22 +1,26 @@
-import { useState } from 'react';
+//WordsTable.jsx
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import styles from './styles.module.css';
-import DictionaryActionCell from '../../dictionary/components/DictionaryRecordActionCell/DictionaryActionCell';
-import defaultData from '../../../infrastructure/utils/data';
+import styles from './index.module.scss';
 import ProgressBar from '../../../layouts/progressBar/ProgressBar';
-// import AddWordModal from '../../dashboard/components/addWordFormModal/AddWordFormModal';
+// import DictionaryActionCell from '../../dictionary/components/DictionaryActionCell';
+import { useWords } from '../../dashboard/WordContext';
 
-const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  const [words] = useState(data);
-
+const WordsTable = () => {
+  const { words } = useWords();
+  console.log('Words in table:', words);
   const columnHelper = createColumnHelper();
   const columns = [
+    columnHelper.display({
+      id: 'number',
+      header: () => '№',
+      cell: ({ row }) => row.index + 1,
+    }),
+
     columnHelper.accessor('en', {
       id: 'word',
       header: () => 'Word',
@@ -45,7 +49,8 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
     columnHelper.display({
       id: 'actions',
       header: () => '',
-      cell: ({ row }) => <DictionaryActionCell row={row} onEdit={onEdit} onDelete={onDelete} />,
+      cell: info => info.getValue(),
+      // cell: ({ row }) => <DictionaryActionCell row={row} />,
     }),
   ];
 
@@ -55,22 +60,8 @@ const WordsTable = ({ data = defaultData, onEdit, onDelete }) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  // const handleAddWord = newWord => {
-  //   setWords(prevWords => [...prevWords, newWord]);
-  // };
-
-  if (!data || data.length === 0) {
-    return <p>No data variables</p>;
-  }
-
   return (
     <>
-      {/* //   <AddWordModal
-    //     isOpen={isModalOpen}
-    //     onRequestClose={() => setIsModalOpen(false)}
-    //     onAddWord={handleAddWord}
-    //   /> */}
-
       <table className={styles.table}>
         {/* thead */}
         <thead>

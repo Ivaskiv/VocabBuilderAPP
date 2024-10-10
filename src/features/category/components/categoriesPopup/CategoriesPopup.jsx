@@ -7,7 +7,7 @@ import {
   useFloating,
 } from '@floating-ui/react';
 import { useEffect, useState } from 'react';
-import styles from './styles.module.css';
+import styles from './index.module.scss';
 import { getCategories } from '../../../../infrastructure/utils/data';
 // import fetchCategories from './categoriesOperations'; //отримання кат з бекенду
 

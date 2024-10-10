@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './styles.module.css';
+import styles from './index.module.scss';
 import DebouncedInput from './DebouncedInput';
 import CategoriesPopup from '../../../features/category/components/CategoriesPopup';
 import { CiSearch } from 'react-icons/ci';

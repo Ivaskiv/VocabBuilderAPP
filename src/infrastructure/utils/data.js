@@ -1,5 +1,5 @@
 // data.js
-const defaultData = [
+let defaultData = [
   {
     id: 1,
     en: 'A little bit',
@@ -140,7 +140,10 @@ const defaultData = [
 
 export const getCategories = () => {
   const categories = new Set(defaultData.map(item => item.category));
-  return Array.from(categories);
+  return Array.from(categories).map((category, index) => ({
+    id: index,
+    name: category,
+  }));
 };
 
 export const addWord = newWord => {
@@ -171,6 +174,10 @@ export const removeWord = wordId => {
 };
 
 export const fetchCategories = () => {
-  return getCategories();
+  return new Promise(resolve => {
+    const categories = getCategories();
+    resolve(categories);
+  });
 };
+
 export default defaultData;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './styles.module.css';
+import styles from './index.module.scss';
 import Logo from '../logo/Logo.jsx';
 import UserBar from '../userBar/UserBar.jsx';
 import UserNav from '../userNav/UserNav';
