@@ -11,7 +11,7 @@ import VerbTypeSwitch from '../../../category/components/categoriesSelector/Verb
 import styles from './index.module.scss';
 import { useWords } from '../../WordContext';
 
-export default function AddWordForm({ closeModal }) {
+export default function AddWordForm({ onClose }) {
   const defaultValues = {
     en: '',
     ua: '',
@@ -84,7 +84,7 @@ export default function AddWordForm({ closeModal }) {
         verbType: selectedCategory === 'Verb' ? selectedVerbType : undefined,
       });
       methods.reset();
-      closeModal();
+      onClose();
     } catch (error) {
       console.error('Error adding word:', error);
     }
@@ -134,7 +134,14 @@ export default function AddWordForm({ closeModal }) {
           <button type="submit" className={styles.submitBtn}>
             Add
           </button>
-          <button type="button" className={styles.submitBtn} onClick={closeModal}>
+          <button
+            type="button"
+            className={styles.submitBtn}
+            onClick={() => {
+              methods.reset();
+              onClose();
+            }}
+          >
             Cancel
           </button>
         </div>

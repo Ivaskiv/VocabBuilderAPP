@@ -6,7 +6,7 @@
   gap: 20px;
 }
 
-.input {
+input {
   width: 100%;
   padding: 16px 18px;
   border: 1px solid rgba(252, 252, 252, 0.3);
@@ -54,28 +54,4 @@
   font-family: 'MacPaw Fixel Display', sans-serif;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
-
-  &:hover {
-    background-color: #fcfcfc;
-    color: #000;
-    border-color: transparent;
-  }
-
-  &.add {
-    background-color: #28a745;
-    border-color: transparent;
-
-    &:hover {
-      background-color: #218838;
-    }
-  }
-
-  &.cancel {
-    background-color: #dc3545;
-    border-color: transparent;
-
-    &:hover {
-      background-color: #c82333;
-    }
-  }
 }

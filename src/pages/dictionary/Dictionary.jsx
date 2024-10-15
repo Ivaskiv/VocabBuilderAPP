@@ -10,6 +10,7 @@ export default function Dictionary() {
         <Dashboard />
         <WordsTable />
       </WordProvider>
+
       {/* <WordsPagination /> */}
     </div>
   );

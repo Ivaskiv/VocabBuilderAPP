@@ -4,7 +4,7 @@ import AddWordFormModal from '../addWordFormModal/AddWordFormModal';
 import ModalProvider from '../../../../infrastructure/modal/components/ModalProvider';
 import ModalTrigger from '../../../../infrastructure/modal/components/ModalTrigger';
 
-export function Dashboard() {
+export function Dashboard({ onClose }) {
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboard_left}></div>
@@ -16,7 +16,7 @@ export function Dashboard() {
               Add word <FiPlus className={styles.icon_add} />
             </div>
           </ModalTrigger>
-          <AddWordFormModal />
+          <AddWordFormModal onClose={onClose} />
         </ModalProvider>
       </div>
     </div>

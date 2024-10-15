@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import defaultData from '../../infrastructure/utils/data';
+import defaultData, { addWord as addWordToData } from '../../infrastructure/utils/data';
 
 export const WordContext = createContext();
 
@@ -20,6 +20,7 @@ export const WordProvider = ({ children }) => {
 
   const addWord = newWord => {
     setWords(prevWords => [...prevWords, newWord]);
+    addWordToData(newWord);
   };
 
   const editWord = updatedWord => {
