@@ -1,82 +1,11 @@
 @import '../../../../index.scss';
-
-.dashboard {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0;
-  // padding: 16px;
-
-  @media (max-width: 374px) {
-    flex-direction: column;
-    // padding: 12px;
-  }
-
-  @media (min-width: 375px) and (max-width: 767px) {
-    // padding: 16px;
-  }
-
-  @media (min-width: 768px) and (max-width: 1439px) {
-    // padding: 24px;
-  }
-}
-
-.dashboardLeft {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dashboardRight {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.addWordBtn {
+.filterContainer {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
   gap: 8px;
-  width: 104px;
-  height: 24px;
-  border: none;
-  background-color: transparent;
+  margin-top: 80px;
+  margin-bottom: 28px;
 }
-
-.iconAdd {
-  width: 12px;
-  height: 12px;
-  color: #85aa9f;
-}
-
-.radioBtnGroup {
-  display: flex;
-  gap: 40px;
-
-  @media (max-width: 374px) {
-    gap: 16px;
-  }
-
-  @media (max-width: 767px) {
-    gap: 24px;
-  }
-
-  @media (min-width: 768px) {
-    gap: 32px;
-  }
-}
-
-.radioBtnContainer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .radioBtnInput {
   display: none;
 }

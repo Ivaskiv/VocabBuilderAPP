@@ -1,5 +1,5 @@
 // data.js
-let defaultData = [
+let defaultData = JSON.parse(localStorage.getItem('words')) || [
   {
     id: 1,
     en: 'A little bit',
@@ -137,47 +137,5 @@ let defaultData = [
     editDelete: 'Edit/Delete',
   },
 ];
-
-export const getCategories = () => {
-  const categories = new Set(defaultData.map(item => item.category));
-  return Array.from(categories).map((category, index) => ({
-    id: index,
-    name: category,
-  }));
-};
-
-export const addWord = newWord => {
-  const newId = defaultData.reduce((maxId, word) => Math.max(maxId, word.id), 0) + 1;
-  defaultData.push({
-    id: newId,
-    ...newWord,
-    progress: 0,
-    editDelete: 'Edit/Delete',
-  });
-};
-
-export const editWord = updatedWord => {
-  const index = defaultData.findIndex(word => word.id === updatedWord.id);
-  if (index !== -1) {
-    defaultData[index] = {
-      ...defaultData[index],
-      ...updatedWord,
-    };
-  }
-};
-
-export const removeWord = wordId => {
-  const index = defaultData.findIndex(word => word.id === wordId);
-  if (index !== -1) {
-    defaultData.splice(index, 1);
-  }
-};
-
-export const fetchCategories = () => {
-  return new Promise(resolve => {
-    const categories = getCategories();
-    resolve(categories);
-  });
-};
 
 export default defaultData;

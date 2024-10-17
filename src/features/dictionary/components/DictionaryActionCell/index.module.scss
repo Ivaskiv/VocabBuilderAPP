@@ -1,5 +1,4 @@
-@import '../../../../index.css';
-
+@import '../../../../index.scss';
 /* index.module.scss */
 .modal_backdrop {
   position: fixed;
@@ -45,21 +44,38 @@
   text-align: right;
 }
 /* popover */
+.popoverContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.triggerBtn {
+  font-size: 16px;
+  padding: 0;
+  font-family: 'MacPaw Fixel Display';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5em;
+
+  color: #121417;
+}
+
 .popover_btn {
   border: none;
   background: transparent;
   font-size: 16px;
   padding: 0;
 }
-.icon_edit,
-.icon_del {
+.iconEdit,
+.iconDelete {
   padding-right: 8px;
   width: 16px;
   height: 16px;
 }
-.icon_edit {
+.iconEdit {
   stroke: #85aa9f;
 }
-.icon_del {
+.iconDelete {
   fill: #85aa9f;
 }

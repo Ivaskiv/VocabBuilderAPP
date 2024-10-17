@@ -72,9 +72,35 @@
 body {
   font-family: var(--font-primary);
   font-weight: var(--font-weight-regular);
-  /* color */
   background-color: var(--color-gray-light);
   color: var(--color-primary-dark);
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0 16px;
+  overflow-x: hidden;
+
+  @media (min-width: 320px) {
+    max-width: 100%;
+    padding: 30px;
+  }
+
+  @media (min-width: 375px) {
+    padding: 0 60px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 80px;
+  }
+
+  @media (min-width: 1440px) {
+    max-width: 1440px;
+    padding: 0 100px;
+    overflow-x: hidden;
+  }
 }
 
 h2 {

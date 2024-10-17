@@ -1,8 +1,8 @@
-@import '../../../../index.css';
+@import '../../../../index.scss';
 
 /* popover */
 
-.popover_content {
+.popoverContent {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -10,7 +10,6 @@
   padding: 12px 24px;
   gap: 8px;
 
-  position: absolute;
   width: auto;
   height: auto;
   background: #ffffff;
@@ -30,11 +29,15 @@
   z-index: 3;
 }
 
-.popover_arrow {
+.popoverArrow {
   position: absolute;
   width: 10px;
   height: 10px;
   background-color: inherit;
   transform: rotate(45deg);
   z-index: -1;
+}
+.trigger {
+  border: none;
+  background: transparent;
 }

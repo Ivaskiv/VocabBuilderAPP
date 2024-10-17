@@ -1,17 +1,15 @@
-// AddWordForm.jsx
 import { FormProvider, useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
 import Joi from 'joi';
+import classNames from 'classnames';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { v4 as uuidv4 } from 'uuid';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories as loadCategories } from '../../../category/redux/categoriesSlice';
-import CategoriesSelector from '../../../category/components/categoriesSelector';
-import VerbTypeSwitch from '../../../category/components/categoriesSelector/VerbTypeSwitch';
+import { useWords } from '../../WordProvider';
 import styles from './index.module.scss';
-import { useWords } from '../../WordContext';
+import VerbTypeSwitch from '../../../category/components/VerbTypeSwitch';
+import CategoriesSelector from '../../../category/components';
+import { useCategory } from '../../../category/components/CategoryProvider';
 
-export default function AddWordForm({ onClose }) {
+export default function AddWordForm({ onClose, className }) {
   const defaultValues = {
     en: '',
     ua: '',
@@ -45,26 +43,13 @@ export default function AddWordForm({ onClose }) {
 
   const { addWord, words } = useWords();
   const { errors } = methods.formState;
-  const dispatch = useDispatch();
-  const { categories, status, error } = useSelector(state => state.categories);
-
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedVerbType, setSelectedVerbType] = useState('Regular');
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(loadCategories());
-    }
-  }, [status, dispatch]);
-
-  const handleCategoryChange = e => {
-    setSelectedCategory(e.target.value);
-    methods.setValue('category', e.target.value);
-  };
-
-  const handleVerbTypeChange = e => {
-    setSelectedVerbType(e.target.value);
-  };
+  const {
+    categories,
+    selectedCategory,
+    selectedVerbType,
+    handleCategoryChange,
+    handleVerbTypeChange,
+  } = useCategory();
 
   const onSubmit = data => {
     const existingWord = words.find(word => word.en === data.en);
@@ -92,25 +77,34 @@ export default function AddWordForm({ onClose }) {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={styles.form}>
-        {status === 'loading' ? (
-          <p>Loading categories...</p>
-        ) : error ? (
-          <p>Error loading categories: {error}</p>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className={classNames(styles.form, className)}
+      >
+        {categories.length > 0 ? (
+          <div>
+            <CategoriesSelector
+              name="category"
+              categories={categories}
+              onChange={handleCategoryChange}
+              error={errors.category}
+            />
+            {errors.category && (
+              <span className={styles.errorMessage}>{errors.category.message}</span>
+            )}
+          </div>
         ) : (
-          <CategoriesSelector
-            name="category"
-            categories={categories}
-            onChange={handleCategoryChange}
-            error={errors.category}
-          />
+          <p>No categories available</p>
         )}
 
         {selectedCategory === 'Verb' && (
           <VerbTypeSwitch
             selectedVerbType={selectedVerbType}
             onChange={handleVerbTypeChange}
-            isVisible={selectedCategory === 'Verb'}
+            // selectedVerbType={methods.watch('verbType')}
+            // onChange={e => methods.setValue('verbType', e.target.value)}
+            className={classNames(styles.radioBtnContainer)}
+            selectStyleName="modal"
           />
         )}
 
@@ -118,7 +112,7 @@ export default function AddWordForm({ onClose }) {
           type="text"
           {...methods.register('en')}
           placeholder="English word"
-          className={`${styles.input} ${errors.en ? styles.error : ''}`}
+          className={classNames(styles.input, { [styles.error]: errors.en })}
         />
         {errors.en && <span className={styles.errorMessage}>{errors.en.message}</span>}
 
@@ -126,7 +120,7 @@ export default function AddWordForm({ onClose }) {
           type="text"
           {...methods.register('ua')}
           placeholder="Ukrainian word"
-          className={`${styles.input} ${errors.ua ? styles.error : ''}`}
+          className={classNames(styles.input, { [styles.error]: errors.ua })}
         />
         {errors.ua && <span className={styles.errorMessage}>{errors.ua.message}</span>}
 

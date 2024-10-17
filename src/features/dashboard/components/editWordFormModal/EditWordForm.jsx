@@ -2,7 +2,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import styles from './index.module.scss';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useWords } from '../../WordContext';
+import { useWords } from '../../WordProvider';
 
 const schema = Joi.object({
   en: Joi.string().required().messages({ 'string.base': 'Invalid English word' }),
