@@ -1,8 +1,10 @@
-1. refs (useRef, forwardRef)
+1. Write trimObjStrValues function it has to take object and optionally an array of keys to inspect.
+   If keys array is not defined then iterate over all keys. Return new object with same keys and
+   only string values trimmed.
 
-- write component that every second randomly change position of element and logs it's position every
-  1.5 second logs element's position
-- write component that every second randomly change value and on click logs it's current value
-- learn what forwardRef do
+Use it in your forms before submitting
 
-2. style popover and use it in DictionaryRecordActionCell (without modal opening)
+2. Write word create and update form as 2 separate forms using react-hook-form library
+
+3. Figure out how modal components that i wrote work. You should know what every line exactly do and
+   how components intended to work together.

@@ -1,96 +1,63 @@
-import 'react-toastify/dist/ReactToastify.css';
 import './infrastructure/api/init.js';
-import styles from './assets/styles/App.module.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { ToastContainer } from 'react-toastify';
-import { store, persistor } from './infrastructure/store/store.js';
-import RestrictedRoute from './infrastructure/atoms/RestrictedRoute.jsx';
-import { getCurrentUser } from './features/auth/authOperations.js';
-import Test from './infrastructure/testing/components/Test.jsx';
+import { persistor, store } from './infrastructure/store/store.js';
+import RegisterForm from './features/auth/components/RegisterForm.jsx';
+import MainLayout from './layouts/MainLayout.jsx';
+import LoginForm from './features/auth/components/LoginForm.jsx';
+import { useGetCurrentUserQuery } from './infrastructure/api/redux/apiSlice.js';
+import Training from './pages/training/Training.jsx';
+import TestPage from './infrastructure/testing/components/TestPage.jsx';
 
-const Home = lazy(() => import('./pages/Home.jsx'));
-const MainLayout = lazy(() => import('./components/layouts/MainLayout.jsx'));
+const Home = lazy(() => import('./pages/home/Home.jsx'));
 const Dictionary = lazy(() => import('./pages/dictionary/Dictionary.jsx'));
-const Recommend = lazy(() => import('./pages/Recommend.jsx'));
-const Training = lazy(() => import('./pages/Training.jsx'));
-const Register = lazy(() => import('./components/forms/RegisterForm.jsx'));
-const Login = lazy(() => import('./components/forms/LoginForm.jsx'));
+const Recommend = lazy(() => import('./pages/recommend/Recommend.jsx'));
 
 const App = () => {
-  const dispatch = useDispatch();
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+
+  const { data, error, isLoading } = useGetCurrentUserQuery(undefined, {
+    skip: !token,
+  });
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      dispatch(getCurrentUser(token));
+    if (data?.currentUser) {
+      navigate('/dictionary');
     }
-  }, [dispatch]);
+    if (error) {
+      console.error('Error fetching current user:', error);
+    }
+  }, [data, error, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading user data</div>;
+  }
+
+  // const isAuthenticated = !!data?.currentUser;
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Suspense fallback={<div>Loading...</div>}>
-          <div className={styles.app_container}>
-            <Routes>
-              <Route path="/" element={<MainLayout />}>
-                <Route index element={<RestrictedRoute component={<Home />} redirectTo="/" />} />
-                {/* <Route
-                  path="/dictionary"
-                  element={<PrivateRoute component={<Dictionary />} redirectTo="/dictionary" />}
-                /> */}
-                {/*
-                <Route
-                  path="/recommend"
-                  element={<PrivateRoute component={<Recommend />} redirectTo="/recommend" />}
-                />
-                <Route
-                  path="/training"
-                  element={<PrivateRoute component={<Training />} redirectTo="/training" />}
-                />
-              </Route> */}
-                <Route
-                  path="/dictionary"
-                  element={<RestrictedRoute component={<Dictionary />} redirectTo="/dictionary" />}
-                />
-
-                <Route
-                  path="/recommend"
-                  element={<RestrictedRoute component={<Recommend />} redirectTo="/recommend" />}
-                />
-                <Route
-                  path="/training"
-                  element={<RestrictedRoute component={<Training />} redirectTo="/training" />}
-                />
-              </Route>
-
-              {/* Public authentication pages */}
-              <Route
-                path="/register"
-                element={<RestrictedRoute component={<Register />} redirectTo="/" />}
-              />
-              <Route
-                path="/login"
-                element={<RestrictedRoute component={<Login />} redirectTo="/" />}
-              />
-              <Route path="/test" element={<Test />} />
-            </Routes>
-            <ToastContainer
-              position="top-center"
-              autoClose={1000}
-              hideProgressBar
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-              transition="Flip"
-            />
-          </div>
+          <Routes>
+            <Route element={<MainLayout />}>
+              {/* <Route path="/" element={isAuthenticated ? <Dictionary /> : <Home />} /> */}
+              <Route path="/" element={<Home />} />
+              <Route path="/dictionary" element={<Dictionary />} />
+              <Route path="/recommend" element={<Recommend />} />
+              <Route path="/training" element={<Training />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/testing" element={<TestPage />} />
+            </Route>
+          </Routes>
         </Suspense>
       </PersistGate>
     </Provider>

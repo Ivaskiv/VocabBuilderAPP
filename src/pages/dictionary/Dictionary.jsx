@@ -1,30 +1,16 @@
-import styles from './styles.module.css';
-import Dashboard from '../../components/dashboard/Dashboard.jsx';
-import WordsTable from '../../components/tables/WordsTable/WordsTable.jsx';
-import ModalProvider from '../../components/modals/ModalProvider.jsx';
-// import Dialog from './Dialog.jsx';
-// import DialogAll from './DialogAll.jsx';
-// import WordsPagination from '../components/common/WordsPagination';
+import WordsTable from '../../features/tables/WordsTable';
+import Dashboard from '../../features/dashboard/components/dashboard';
+import { useSelector } from 'react-redux';
+import { selectCurrentPage, selectItemsPerPage } from '../../features/filter/redux/filtersSlice';
 
-const Dictionary = () => {
+export default function Dictionary() {
+  const currentPage = useSelector(selectCurrentPage);
+  const itemsPerPage = useSelector(selectItemsPerPage);
+
   return (
-    <div className={styles.dictionary_page}>
+    <div>
       <Dashboard />
-      <div>
-        <ModalProvider>
-          <WordsTable />
-        </ModalProvider>
-      </div>
-      {/* <div>
-        <h1>Floating UI — Dialog</h1>
-        <ModalProvider>
-          <Dialog />
-          <DialogAll />
-        </ModalProvider>
-      </div> */}
-
-      {/* <WordsPagination /> */}
+      <WordsTable currentPage={currentPage} itemsPerPage={itemsPerPage} />
     </div>
   );
-};
-export default Dictionary;
+}

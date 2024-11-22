@@ -1,22 +1,24 @@
 //store.js
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
+import wordsReducer from '../../features/dictionary/redux/wordsSlice';
+import categoriesReducer from '../../features/category/redux/categoriesSlice';
+import filtersReducer from '../../features/filter/redux/filtersSlice';
+import { apiSlice } from '../api/redux/apiSlice';
+import authReducer from '../../features/auth/redux/authSlice';
 
-import userReducer from '../../features/auth/authSlice';
-import categoriesReducer from '../../features/category/categoriesSlice';
-import wordsReducer from '../../features/dictionary/redux/slice';
-
+// https://redux-toolkit.js.org/api/combineSlices
+// apiSlice  додати до основного редюсера для обробки запитів API,
+// щоб він автоматично управляв своїм станом
 const rootReducer = combineReducers({
-  auth: userReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
+  auth: authReducer,
   categories: categoriesReducer,
-  //додавання, редагування, видалення, вивчення слів
   words: wordsReducer,
-  //стан тренувань користувача(прогрес і результати)
-  // trainaing: trainingReducer,
-  //відображення повідомлень про помилки, успішні операції, ...
-  // notifications: notificationsReducer,
+  filters: filtersReducer,
 });
 
 const persistConfig = {
@@ -34,7 +36,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(apiSlice.middleware),
   devTools: import.meta.env.MODE === 'development',
 });
 
